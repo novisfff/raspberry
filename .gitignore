@@ -5,6 +5,10 @@
 /workspace.xml
 /HELP.md
 
+*.log
+/.log/
+/log/
+
 # Datasource local storage ignored files
 /../../../../:\java_code\raspberry\.idea/dataSources/
 /dataSources.local.xml

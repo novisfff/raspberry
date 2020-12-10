@@ -52,6 +52,7 @@ public class StageListener implements ApplicationListener<JavafxApplication.Stag
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, width, height);
             scene.setCursor(Cursor.NONE);
+            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
             stage.setScene(scene);
             stage.setFullScreen(true);
             stage.setTitle(this.applicationTitle);
