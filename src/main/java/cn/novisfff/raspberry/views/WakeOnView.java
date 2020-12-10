@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.io.IOException;
  */
 
 @Component
+@EnableScheduling
 public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
     private ConfigurableApplicationContext applicationContext;
@@ -73,4 +76,19 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
             homeController.leftPane.getChildren().setAll(root);
         });
     }
+
+    @Scheduled(fixedRate = 200)
+    private void wakeOnPaneCheckTask() {
+        if (wakeonButton == null) {
+            return;
+        }
+        if (networkUtilService.ping() && !isConnecting) {
+            isConnecting = true;
+            Platform.runLater(() -> progressPane.setVisible(true));
+        } else if (!networkUtilService.ping() && isConnecting) {
+            isConnecting = false;
+            Platform.runLater(() -> progressPane.setVisible(false));
+        }
+    }
+
 }

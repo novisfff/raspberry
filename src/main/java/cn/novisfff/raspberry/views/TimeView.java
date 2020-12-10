@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.service.NetworkUtilService;
 import eu.hansolo.medusa.Clock;
 import eu.hansolo.medusa.ClockBuilder;
 import javafx.application.Platform;
@@ -27,20 +28,24 @@ import java.util.Locale;
  * @version: $
  */
 @Component
+@EnableScheduling
 public class TimeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
     private ConfigurableApplicationContext applicationContext;
 
     private HomeController homeController;
 
+    NetworkUtilService networkUtilService;
+
     @FXML
     public Pane timePane;
 
     public Clock timeClock;
 
-    public TimeView(ConfigurableApplicationContext applicationContext, HomeController homeController) {
+    public TimeView(ConfigurableApplicationContext applicationContext, HomeController homeController, NetworkUtilService networkUtilService) {
         this.applicationContext = applicationContext;
         this.homeController = homeController;
+        this.networkUtilService = networkUtilService;
     }
 
     @Override
@@ -71,4 +76,14 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
             homeController.timePane.getChildren().setAll(root);
         });
     }
+
+    @Scheduled(fixedRate = 1000)
+    private void timePaneTask() {
+        if (timeClock == null) {
+            return;
+        }
+        Platform.runLater(() -> timeClock.setTime(System.currentTimeMillis() / 1000));
+
+    }
+
 }

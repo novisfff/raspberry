@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
  * @version: $
  */
 
-@Component
-@EnableScheduling
 public class ScheduleTaskService {
 
     HomeController homeController;
@@ -30,36 +28,5 @@ public class ScheduleTaskService {
 
     TimeView timeView;
 
-    public ScheduleTaskService(HomeController homeController, NetworkUtilService networkUtilService, WakeOnView wakeOnView, TimeView timeView) {
-        this.homeController = homeController;
-        this.networkUtilService = networkUtilService;
-        this.wakeOnView = wakeOnView;
-        this.timeView = timeView;
-    }
-
-    @Scheduled(fixedRate = 1000)
-    private void timePaneTask() {
-        System.out.println(1);
-        if (timeView.timeClock == null) {
-            return;
-        }
-        System.out.println(2);
-        Platform.runLater(() -> timeView.timeClock.setTime(System.currentTimeMillis() / 1000));
-
-    }
-
-    @Scheduled(fixedRate = 200)
-    private void wakeOnPaneCheckTask() {
-        if (wakeOnView.wakeonButton == null) {
-            return;
-        }
-        if (networkUtilService.ping() && !wakeOnView.isConnecting) {
-            wakeOnView.isConnecting = true;
-            Platform.runLater(() -> wakeOnView.progressPane.setVisible(true));
-        } else if (!networkUtilService.ping() && wakeOnView.isConnecting) {
-            wakeOnView.isConnecting = false;
-            Platform.runLater(() -> wakeOnView.progressPane.setVisible(false));
-        }
-    }
 
 }
