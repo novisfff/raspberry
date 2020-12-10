@@ -1,0 +1,13 @@
+javafx:
+  ui:
+    title: spring
+    width: 800
+    height: 480
+    rootFxml: home.fxml
+
+networkUtil:
+  ip: 192.168.1.13
+  broadcast: 192.168.1.255
+  mac: 80:FA:5B:38:88:A4
+
+
