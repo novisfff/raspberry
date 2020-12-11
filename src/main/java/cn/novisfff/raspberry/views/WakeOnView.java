@@ -45,11 +45,9 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
         this.homeView = homeView;
         this.computerInfoView = computerInfoView;
         this.networkUtilService = networkUtilService;
-        computerInfoPane = computerInfoView.computerInfoPane;
     }
 
     Pane wakeOnPane;
-    Pane computerInfoPane;
 
     @FXML
     public Button wakeOnButton;
@@ -88,7 +86,7 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
     }
 
     void switchToComputerInfoPane() {
-        homeView.leftPane.getChildren().setAll(computerInfoPane);
+        homeView.leftPane.getChildren().setAll(computerInfoView.computerInfoPane);
     }
 
 }
