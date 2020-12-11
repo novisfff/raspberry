@@ -34,18 +34,18 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
 
     private HomeView homeView;
 
-    NetworkUtilService networkUtilService;
-
-    @FXML
-    public Pane timePane;
-
-    public Clock timeClock;
+    private NetworkUtilService networkUtilService;
 
     public TimeView(ConfigurableApplicationContext applicationContext, HomeView homeView, NetworkUtilService networkUtilService) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
         this.networkUtilService = networkUtilService;
     }
+
+    @FXML
+    public Pane timePane;
+
+    public Clock timeClock;
 
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {

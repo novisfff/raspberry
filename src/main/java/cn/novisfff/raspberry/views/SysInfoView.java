@@ -36,7 +36,6 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
 
     private HomeView homeView;
 
-
     @FXML
     private Pane cpuPane;
     @FXML
@@ -53,13 +52,8 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
     private Pane temperaturePane;
 
 
-    Gauge CPU0LoadGauge;
-    Gauge CPU1LoadGauge;
-    Gauge CPU2LoadGauge;
-    Gauge CPU3LoadGauge;
-    Gauge CPULoadGauge;
-    Gauge memoryGauge;
-    Gauge temperatureGauge;
+    Gauge Cpu0LoadGauge, Cpu1LoadGauge, Cpu2LoadGauge, Cpu3LoadGauge, CpuLoadGauge, memoryGauge, temperatureGauge;
+
 
     public SysInfoView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
         this.applicationContext = applicationContext;
@@ -79,20 +73,20 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 throw new RuntimeException(exception);
             }
 
-            CPU0LoadGauge = buildCpuCoreGauge();
-            cpu0Pane.getChildren().setAll(CPU0LoadGauge);
+            Cpu0LoadGauge = buildCpuCoreGauge();
+            cpu0Pane.getChildren().setAll(Cpu0LoadGauge);
 
-            CPU1LoadGauge = buildCpuCoreGauge();
-            cpu1Pane.getChildren().setAll(CPU1LoadGauge);
+            Cpu1LoadGauge = buildCpuCoreGauge();
+            cpu1Pane.getChildren().setAll(Cpu1LoadGauge);
 
-            CPU2LoadGauge = buildCpuCoreGauge();
-            cpu2Pane.getChildren().setAll(CPU2LoadGauge);
+            Cpu2LoadGauge = buildCpuCoreGauge();
+            cpu2Pane.getChildren().setAll(Cpu2LoadGauge);
 
-            CPU3LoadGauge = buildCpuCoreGauge();
-            cpu3Pane.getChildren().setAll(CPU3LoadGauge);
+            Cpu3LoadGauge = buildCpuCoreGauge();
+            cpu3Pane.getChildren().setAll(Cpu3LoadGauge);
 
-            CPULoadGauge = buildCpuLoadGauge();
-            cpuPane.getChildren().setAll(CPULoadGauge);
+            CpuLoadGauge = buildCpuLoadGauge();
+            cpuPane.getChildren().setAll(CpuLoadGauge);
 
             memoryGauge = buildMemoryGauge();
             memoryPane.getChildren().setAll(memoryGauge);
@@ -175,7 +169,7 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
 @Conditional(LinuxCondition.class)
 class SysInfoViewSchedule {
 
-    SysInfoView sysInfoView;
+    private SysInfoView sysInfoView;
 
     private SysInfoUtilService sysInfoUtilService;
 
@@ -187,7 +181,7 @@ class SysInfoViewSchedule {
     @Scheduled(initialDelay = 5000, fixedRate = 3000)
     private void sysInfoUpdateTask() {
 
-        if(sysInfoView.CPU0LoadGauge == null) {
+        if(sysInfoView.Cpu0LoadGauge == null) {
             return;
         }
 
@@ -196,11 +190,11 @@ class SysInfoViewSchedule {
         double cpuTemp = sysInfoUtilService.getCPUTemp();
         Platform.runLater(() -> {
             if (cpuUsed != null) {
-                sysInfoView.CPU0LoadGauge.setValue(cpuUsed[0] * 100);
-                sysInfoView.CPU1LoadGauge.setValue(cpuUsed[1] * 100);
-                sysInfoView.CPU2LoadGauge.setValue(cpuUsed[2] * 100);
-                sysInfoView.CPU3LoadGauge.setValue(cpuUsed[3] * 100);
-                sysInfoView.CPULoadGauge.setValue(cpuUsed[4] * 100);
+                sysInfoView.Cpu0LoadGauge.setValue(cpuUsed[0] * 100);
+                sysInfoView.Cpu1LoadGauge.setValue(cpuUsed[1] * 100);
+                sysInfoView.Cpu2LoadGauge.setValue(cpuUsed[2] * 100);
+                sysInfoView.Cpu3LoadGauge.setValue(cpuUsed[3] * 100);
+                sysInfoView.CpuLoadGauge.setValue(cpuUsed[4] * 100);
             }
             sysInfoView.memoryGauge.setValue(usedMemory);
             sysInfoView.temperatureGauge.setValue(cpuTemp);

@@ -35,9 +35,9 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
     private HomeView homeView;
 
-    ComputerInfoView computerInfoView;
+    private ComputerInfoView computerInfoView;
 
-    NetworkUtilService networkUtilService;
+    private NetworkUtilService networkUtilService;
 
     public WakeOnView(ConfigurableApplicationContext applicationContext, HomeView homeView,
                       ComputerInfoView computerInfoView, NetworkUtilService networkUtilService) {
@@ -98,7 +98,7 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 @Conditional(LinuxCondition.class)
 class WakeOnViewSchedule {
 
-    WakeOnView wakeOnView;
+    private WakeOnView wakeOnView;
 
     private NetworkUtilService networkUtilService;
 

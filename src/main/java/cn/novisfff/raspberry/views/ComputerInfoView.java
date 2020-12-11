@@ -28,7 +28,7 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
 
     private ConfigurableApplicationContext applicationContext;
 
-    public boolean isConnecting = false;
+    boolean isConnecting = false;
 
     Pane computerInfoPane;
 
