@@ -70,7 +70,7 @@
             </Pane>
             <Pane fx:id="memoryPane" layoutX="241.0" prefHeight="110.0" prefWidth="110.0" AnchorPane.bottomAnchor="5.0"
                   AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="5.0"/>
-            <Pane fx:id="temperaturePane0" layoutX="346.0" layoutY="-70.0" prefHeight="100.0" prefWidth="100.0"
+            <Pane fx:id="temperaturePane" layoutX="346.0" layoutY="-70.0" prefHeight="100.0" prefWidth="100.0"
                   AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0"/>
             <Label layoutX="380.0" layoutY="17.0" text="Memory" textFill="#fcc601" AnchorPane.leftAnchor="293.0"
                    AnchorPane.topAnchor="30.0">

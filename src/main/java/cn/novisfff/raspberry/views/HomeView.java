@@ -1,10 +1,12 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +25,25 @@ import java.io.IOException;
  */
 
 @Component
-public class StageListener implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+public class HomeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+
+    @FXML
+    Pane rightPane2;
+
+    @FXML
+    Pane rightPane3;
+
+    @FXML
+    Pane rightPane0;
+
+    @FXML
+    Pane rightPane1;
+
+    @FXML
+    Pane leftPane;
+
+    @FXML
+    Pane timePane;
 
     private final String applicationTitle;
     private final ApplicationContext applicationContext;
@@ -31,7 +51,7 @@ public class StageListener implements ApplicationListener<JavafxApplication.Stag
     private final int height;
     private final String rootFxml;
 
-    public StageListener(@Value("${javafx.ui.title}")String applicationTitle,
+    public HomeView(@Value("${javafx.ui.title}")String applicationTitle,
                          @Value("${javafx.ui.width}")int width,
                          @Value("${javafx.ui.height}")int height,
                          @Value("${javafx.ui.rootFxml}")String rootFxml,

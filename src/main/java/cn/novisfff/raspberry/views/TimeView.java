@@ -28,12 +28,11 @@ import java.util.Locale;
  * @version: $
  */
 @Component
-@EnableScheduling
 public class TimeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
     private ConfigurableApplicationContext applicationContext;
 
-    private HomeController homeController;
+    private HomeView homeView;
 
     NetworkUtilService networkUtilService;
 
@@ -42,47 +41,62 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
 
     public Clock timeClock;
 
-    public TimeView(ConfigurableApplicationContext applicationContext, HomeController homeController, NetworkUtilService networkUtilService) {
+    public TimeView(ConfigurableApplicationContext applicationContext, HomeView homeView, NetworkUtilService networkUtilService) {
         this.applicationContext = applicationContext;
-        this.homeController = homeController;
+        this.homeView = homeView;
         this.networkUtilService = networkUtilService;
     }
 
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
-            Pane root = null;
+            Pane root;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("time.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 root = fxmlLoader.load();
-                //Scene scene = new Scene(root);
-                homeController.timePane.getChildren().add(root);
+                homeView.timePane.getChildren().add(root);
             } catch (IOException exception) {
                 throw new RuntimeException(exception);
             }
 
-            timeClock = ClockBuilder
-                    .create()
-                    .prefSize(300, 120)
-                    .skinType(Clock.ClockSkinType.DIGITAL)
-                    .locale(Locale.CHINA).textColor(Color.WHITE)
-                    .backgroundPaint(new Color(0, 0, 0, 0.5))
-                    .dateColor(Color.WHITE)
-                    .build();
-
+            timeClock = buildTimeClock();
             timePane.getChildren().setAll(timeClock);
 
-            homeController.timePane.getChildren().setAll(root);
+            homeView.timePane.getChildren().setAll(root);
         });
     }
 
-    @Scheduled(fixedRate = 1000)
+    private Clock buildTimeClock() {
+        return ClockBuilder
+                .create()
+                .prefSize(300, 120)
+                .skinType(Clock.ClockSkinType.DIGITAL)
+                .locale(Locale.CHINA).textColor(Color.WHITE)
+                .backgroundPaint(new Color(0, 0, 0, 0.5))
+                .dateColor(Color.WHITE)
+                .build();
+    }
+
+}
+
+@Component
+@EnableScheduling
+class TimeViewSchedule {
+
+    TimeView timeView;
+
+    public TimeViewSchedule(TimeView timeView) {
+        this.timeView = timeView;
+    }
+
+
+    @Scheduled(initialDelay = 2000, fixedRate = 1000)
     private void timePaneTask() {
-        if (timeClock == null) {
+        if (timeView.timeClock == null) {
             return;
         }
-        Platform.runLater(() -> timeClock.setTime(System.currentTimeMillis() / 1000));
+        Platform.runLater(() -> timeView.timeClock.setTime(System.currentTimeMillis() / 1000));
 
     }
 
