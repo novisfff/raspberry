@@ -17,13 +17,11 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * @author ：zyf
+ * <h1>树莓派系统信息页面</h1>
+ *
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/10
- * @description：
- * @modified By：
- * @version: $
  */
-
 @Component
 public class SysInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
@@ -55,6 +53,11 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
         this.homeView = homeView;
     }
 
+    /**
+     * 初始化页面
+     *
+     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
+     */
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
@@ -93,6 +96,9 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
         });
     }
 
+    /**
+     * 构建绘制CPU单个核心使用率的{@link Gauge}
+     */
     private Gauge buildCpuCoreGauge() {
         return GaugeBuilder
                 .create()
@@ -107,6 +113,9 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .build();
     }
 
+    /**
+     * 构建绘制CPU总体使用率的{@link Gauge}
+     */
     private Gauge buildCpuLoadGauge() {
         return GaugeBuilder
                 .create()
@@ -125,6 +134,9 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .build();
     }
 
+    /**
+     * 构建绘制内存使用率的{@link Gauge}
+     */
     private Gauge buildMemoryGauge() {
         return GaugeBuilder
                 .create()
@@ -140,6 +152,9 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .build();
     }
 
+    /**
+     * 构建绘制cpu温度的{@link Gauge}
+     */
     private Gauge buildTemperatureGauge() {
         return GaugeBuilder
                 .create()

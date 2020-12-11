@@ -13,17 +13,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 
 
 /**
- * @author ：zyf
+ * <h1>首页JavaFx页面</h1>
+ * 构建首页页面，同时初始化JavaFx{@link Stage}
+ *
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/9
- * @description：
- * @modified By：
- * @version: $
  */
-
 @Component
 public class HomeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
@@ -45,17 +45,36 @@ public class HomeView implements ApplicationListener<JavafxApplication.StageRead
     @FXML
     Pane timePane;
 
+    /**
+     * 窗口标题，通过javafx.ui.title属性配置
+     */
     private final String applicationTitle;
-    private final ApplicationContext applicationContext;
+
+    /**
+     * 窗口宽度，通过javafx.ui.width属性配置
+     */
     private final int width;
+
+    /**
+     * 窗口高度，通过javafx.ui.height属性配置
+     */
     private final int height;
+
+    /**
+     * 主页Fxml文件，通过javafx.ui.rootFxml属性配置
+     */
     private final String rootFxml;
 
-    public HomeView(@Value("${javafx.ui.title}")String applicationTitle,
-                         @Value("${javafx.ui.width}")int width,
-                         @Value("${javafx.ui.height}")int height,
-                         @Value("${javafx.ui.rootFxml}")String rootFxml,
-                         ApplicationContext applicationContext) {
+    /**
+     * Spring上下文
+     */
+    private final ApplicationContext applicationContext;
+
+    public HomeView(@Value("${javafx.ui.title}") String applicationTitle,
+                    @Value("${javafx.ui.width}") int width,
+                    @Value("${javafx.ui.height}") int height,
+                    @Value("${javafx.ui.rootFxml}") String rootFxml,
+                    ApplicationContext applicationContext) {
         this.applicationTitle = applicationTitle;
         this.width = width;
         this.height = height;
@@ -63,6 +82,11 @@ public class HomeView implements ApplicationListener<JavafxApplication.StageRead
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * 初始化页面
+     *
+     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
+     */
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
 

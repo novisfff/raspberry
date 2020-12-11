@@ -16,19 +16,15 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * @author ：zyf
+ * <h1>电脑信息JavaFx页面</h1>
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/11
- * @description：
- * @modified By：
- * @version: $
+ * @see cn.novisfff.raspberry.views.schedule.SysInfoViewSchedule
  */
-
 @Component
 public class ComputerInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
     private ConfigurableApplicationContext applicationContext;
-
-    boolean isConnecting = false;
 
     Pane computerInfoPane;
 
@@ -49,6 +45,10 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
 
     private Gauge cpuUsedGauge, cpuTempGauge, gpuUsedGauge, gpuTempGauge, memoryGauge;
 
+    /**
+     * 初始化页面
+     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
+     */
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
@@ -79,6 +79,9 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
         });
     }
 
+    /**
+     * 构建绘制CPU和GPU使用率的{@link Gauge}
+     */
     private Gauge buildCpuGpuGauge() {
         return GaugeBuilder
                 .create()
@@ -93,6 +96,9 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .build();
     }
 
+    /**
+     * 构建绘制CPU和GPU温度的{@link Gauge}
+     */
     private Gauge buildTempGauge() {
         return GaugeBuilder
                 .create()
@@ -109,6 +115,9 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .build();
     }
 
+    /**
+     * 构建绘制内存使用率的{@link Gauge}
+     */
     private Gauge buildMemoryGauge() {
         return GaugeBuilder
                 .create()

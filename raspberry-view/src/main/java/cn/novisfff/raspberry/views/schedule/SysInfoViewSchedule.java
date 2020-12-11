@@ -9,16 +9,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @author ：zyf
+ * 系统消息页面定时任务
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/11
- * @description：
- * @modified By：
- * @version: $
+ * @see SysInfoView
  */
 
 @Component
 @Conditional(LinuxCondition.class)
-class SysInfoViewSchedule {
+public class SysInfoViewSchedule {
 
     private SysInfoView sysInfoView;
 

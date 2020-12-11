@@ -5,11 +5,9 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
- * @author ：zyf
+ * 系统为Windows情况
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/11
- * @description：
- * @modified By：
- * @version: $
  */
 
 public class WindowsCondition implements Condition {

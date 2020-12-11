@@ -1,7 +1,5 @@
 package cn.novisfff.raspberry;
 
-
-import cn.novisfff.raspberry.RaspberryApplication;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -16,17 +14,27 @@ import org.springframework.context.support.GenericApplicationContext;
 
 
 /**
- * @author ：zyf
+ * <h1>JavaFx Application 启动类</h1>
+ *
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/9
- * @description：
- * @modified By：
- * @version: $
  */
 
-public class JavafxApplication extends Application{
+public class JavafxApplication extends Application {
 
+    /**
+     * Spring 上下文
+     */
     private ConfigurableApplicationContext context;
 
+    /**
+     * 重写初始化方法
+     * <p>
+     * 在JavaFx启动线程中初始化Spring，并将javaFx相关组件注册到Spring中
+     *
+     * @throws Exception
+     * @author novisfff
+     */
     @Override
     public void init() throws Exception {
 
@@ -41,18 +49,37 @@ public class JavafxApplication extends Application{
                 .run(getParameters().getRaw().toArray(new String[0]));
     }
 
+    /**
+     * 重写启动方法
+     * <p>
+     * 在启动时发布{@link cn.novisfff.raspberry.JavafxApplication.StageReadyEvent}事件，
+     * 表明JavaFx相关视图部分可以进行初始化
+     *
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.context.publishEvent(new StageReadyEvent(primaryStage));
     }
 
+    /**
+     * 重写stop方法
+     * <p>
+     * 关闭Spring与JavaFx
+     *
+     * @throws Exception
+     */
     @Override
     public void stop() throws Exception {
         this.context.close();
         Platform.exit();
     }
 
-    public class StageReadyEvent extends ApplicationEvent {
+    /**
+     * StageReady事件类
+     */
+    public static class StageReadyEvent extends ApplicationEvent {
 
         public Stage getStage() {
             return Stage.class.cast(getSource());

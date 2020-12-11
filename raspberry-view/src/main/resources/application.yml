@@ -1,3 +1,5 @@
+
+# javafx 配置
 javafx:
   ui:
     title: spring
@@ -5,9 +7,13 @@ javafx:
     height: 480
     rootFxml: home.fxml
 
+# 监控电脑网络工具配置
 networkUtil:
+  # 电脑IP地址
   ip: 192.168.1.5
+  # 网段广播地址
   broadcast: 192.168.1.255
+  # 电脑MAC地址
   mac: 80:FA:5B:38:88:A4
 
 

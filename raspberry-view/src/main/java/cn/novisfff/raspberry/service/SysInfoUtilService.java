@@ -12,16 +12,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * @author ：zyf
+ * 获取linux系统信息工具服务
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/10
- * @description：
- * @modified By：
- * @version: $
  */
 
 @Component
 public class SysInfoUtilService {
 
+    /**
+     * @see Sigar
+     */
     private static Sigar sigar;
 
     static {
@@ -29,7 +30,6 @@ public class SysInfoUtilService {
     }
 
     /**
-     * create by: zyf
      * description: 获取CPU占用（0-1）
      * create time: 2020/9/7
      *
@@ -57,7 +57,6 @@ public class SysInfoUtilService {
     }
 
     /**
-     * create by: zyf
      * description: 获取占用内存（MB）
      * create time: 2020/9/7
      *
@@ -75,11 +74,14 @@ public class SysInfoUtilService {
         }
     }
 
+    /**
+     * 获取cpu温度信息
+     * @return
+     */
     public double getCPUTemp() {
         // 获取当前程序的运行进对象
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
-        String line = null;
         InputStream is = null;
         InputStreamReader isr = null;
         BufferedReader br = null;

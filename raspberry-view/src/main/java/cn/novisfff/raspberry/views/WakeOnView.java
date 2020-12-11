@@ -1,33 +1,24 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
-import cn.novisfff.raspberry.condition.LinuxCondition;
 import cn.novisfff.raspberry.service.NetworkUtilService;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 /**
- * @author ：zyf
+ * <h1>唤醒开关页面</h1>
+ *
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/9
- * @description：
- * @modified By：
- * @version: $
  */
-
-
 @Component
 public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
@@ -57,6 +48,10 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
     public boolean isInfoPane = false;
 
+    /**
+     * 初始化页面
+     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
+     */
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
 
@@ -81,10 +76,17 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
         });
     }
 
+    /**
+     * 切换到唤醒开关页面
+     */
     public void switchToWakeOnPane() {
         homeView.leftPane.getChildren().setAll(wakeOnPane);
     }
 
+    /**
+     * 切换到电脑信息页面
+     * @see ComputerInfoView
+     */
     public void switchToComputerInfoPane() {
         homeView.leftPane.getChildren().setAll(computerInfoView.computerInfoPane);
     }

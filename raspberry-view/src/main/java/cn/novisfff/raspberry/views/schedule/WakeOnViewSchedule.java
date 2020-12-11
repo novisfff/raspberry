@@ -9,16 +9,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @author ：zyf
+ * 唤醒页面定时器
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/11
- * @description：
- * @modified By：
- * @version: $
+ * @see WakeOnView
+ * @see cn.novisfff.raspberry.views.SysInfoView
  */
 
 @Component
 @Conditional(LinuxCondition.class)
-class WakeOnViewSchedule {
+public class WakeOnViewSchedule {
 
     private WakeOnView wakeOnView;
 

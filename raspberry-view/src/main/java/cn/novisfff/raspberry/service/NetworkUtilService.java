@@ -6,11 +6,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * @author ：zyf
+ * 测试与电脑链接和启动电脑工具服务
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/9
- * @description：
- * @modified By：
- * @version: $
  */
 
 @Component
@@ -28,6 +26,9 @@ public class NetworkUtilService {
         this.broadcast = broadcast;
     }
 
+    /**
+     * 通过指令wakeonlan启动电脑
+     */
     public void wakeOnLan() {
         Runtime runtime = Runtime.getRuntime();
         try {
@@ -37,6 +38,9 @@ public class NetworkUtilService {
         }
     }
 
+    /**
+     * 返回是否能ping通电脑
+     */
     public boolean ping() {
         try {
             return 0 == Runtime.getRuntime().exec("ping -c 1 " + ip).waitFor();

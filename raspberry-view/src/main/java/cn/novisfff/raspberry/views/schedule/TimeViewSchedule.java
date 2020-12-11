@@ -6,15 +6,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @author ：zyf
+ * 显示时间页面定时器
+ * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/11
- * @description：
- * @modified By：
- * @version: $
+ * @see TimeView
  */
 
 @Component
-class TimeViewSchedule {
+public class TimeViewSchedule {
 
     TimeView timeView;
 
