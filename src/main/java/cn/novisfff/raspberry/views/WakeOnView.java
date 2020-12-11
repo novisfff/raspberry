@@ -94,7 +94,6 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
 
 @Component
-@EnableScheduling
 @Conditional(LinuxCondition.class)
 class WakeOnViewSchedule {
 
@@ -112,13 +111,14 @@ class WakeOnViewSchedule {
         if (wakeOnView.wakeOnButton == null) {
             return;
         }
-        if (networkUtilService.ping() && !wakeOnView.isInfoPane) {
+        boolean pingResult = networkUtilService.ping();
+        if (pingResult && !wakeOnView.isInfoPane) {
             wakeOnView.isInfoPane = true;
             Platform.runLater(() -> {
                 wakeOnView.progressPane.setVisible(false);
                 wakeOnView.switchToComputerInfoPane();
             });
-        } else if (!networkUtilService.ping() && wakeOnView.isInfoPane) {
+        } else if (!pingResult && wakeOnView.isInfoPane) {
             wakeOnView.isInfoPane = false;
             Platform.runLater(() -> wakeOnView.switchToWakeOnPane());
         }

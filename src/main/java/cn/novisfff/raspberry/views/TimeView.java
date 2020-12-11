@@ -81,7 +81,6 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
 }
 
 @Component
-@EnableScheduling
 class TimeViewSchedule {
 
     TimeView timeView;
@@ -91,7 +90,7 @@ class TimeViewSchedule {
     }
 
 
-    @Scheduled(initialDelay = 2000, fixedRate = 1000)
+    @Scheduled(cron = "*/1 * * * * ?")
     private void timePaneTask() {
         if (timeView.timeClock == null) {
             return;
