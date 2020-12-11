@@ -10,7 +10,7 @@
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="cn.novisfff.raspberry.views.WakeOnView">
     <children>
-        <Button fx:id="wakeonButton" layoutX="70.0" layoutY="100.0" mnemonicParsing="false" prefHeight="160.0"
+        <Button fx:id="wakeOnButton" layoutX="70.0" layoutY="100.0" mnemonicParsing="false" prefHeight="160.0"
                 prefWidth="160.0" style="-fx-border-radius: 80; -fx-background-radius: 80;"/>
         <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="100.0" layoutY="130.0">
             <image>

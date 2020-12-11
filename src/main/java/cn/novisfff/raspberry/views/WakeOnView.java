@@ -27,6 +27,7 @@ import java.io.IOException;
  * @version: $
  */
 
+
 @Component
 public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
 
@@ -34,73 +35,90 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
     private HomeView homeView;
 
-    private NetworkUtilService networkUtilService;
+    ComputerInfoView computerInfoView;
 
-    public boolean isConnecting = false;
+    NetworkUtilService networkUtilService;
+
+    public WakeOnView(ConfigurableApplicationContext applicationContext, HomeView homeView,
+                      ComputerInfoView computerInfoView, NetworkUtilService networkUtilService) {
+        this.applicationContext = applicationContext;
+        this.homeView = homeView;
+        this.computerInfoView = computerInfoView;
+        this.networkUtilService = networkUtilService;
+        computerInfoPane = computerInfoView.computerInfoPane;
+    }
+
+    Pane wakeOnPane;
+    Pane computerInfoPane;
 
     @FXML
-    public Button wakeonButton;
+    public Button wakeOnButton;
 
     @FXML
     public Pane progressPane;
 
-    public WakeOnView(ConfigurableApplicationContext applicationContext, HomeView homeView, NetworkUtilService networkUtilService) {
-        this.applicationContext = applicationContext;
-        this.homeView = homeView;
-        this.networkUtilService = networkUtilService;
-    }
+    public boolean isInfoPane = false;
 
     @Override
     public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+
         Platform.runLater(() -> {
-            Pane root;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("wakeon.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
-                root = fxmlLoader.load();
-                homeView.timePane.getChildren().add(root);
+                wakeOnPane = fxmlLoader.load();
             } catch (IOException exception) {
                 throw new RuntimeException(exception);
             }
 
             progressPane.setVisible(false);
 
-            wakeonButton.setOnMouseEntered(mouseEvent -> {
+            wakeOnButton.setOnMouseEntered(mouseEvent -> {
                 progressPane.setVisible(true);
                 networkUtilService.wakeOnLan();
             });
 
-            homeView.leftPane.getChildren().setAll(root);
+            switchToWakeOnPane();
+
         });
     }
 
+    void switchToWakeOnPane() {
+        homeView.leftPane.getChildren().setAll(wakeOnPane);
+    }
+
+    void switchToComputerInfoPane() {
+        homeView.leftPane.getChildren().setAll(computerInfoPane);
+    }
+
 }
+
+
 
 @Component
 @EnableScheduling
 @Conditional(LinuxCondition.class)
 class WakeOnViewSchedule {
 
-    private WakeOnView wakeOnView;
+    WakeOnView wakeOnView;
 
     private NetworkUtilService networkUtilService;
 
-    public WakeOnViewSchedule(WakeOnView wakeOnView, NetworkUtilService networkUtilService) {
-        this.wakeOnView = wakeOnView;
-        this.networkUtilService = networkUtilService;
-    }
 
     @Scheduled(initialDelay = 2000, fixedRate = 200)
     private void wakeOnPaneCheckTask() {
-        if (wakeOnView.wakeonButton == null) {
+        if (wakeOnView.wakeOnButton == null) {
             return;
         }
-        if (networkUtilService.ping() && !wakeOnView.isConnecting) {
-            wakeOnView.isConnecting = true;
-            Platform.runLater(() -> wakeOnView.progressPane.setVisible(true));
-        } else if (!networkUtilService.ping() && wakeOnView.isConnecting) {
-            wakeOnView.isConnecting = false;
-            Platform.runLater(() -> wakeOnView.progressPane.setVisible(false));
+        if (networkUtilService.ping() && !wakeOnView.isInfoPane) {
+            wakeOnView.isInfoPane = true;
+            Platform.runLater(() -> {
+                wakeOnView.progressPane.setVisible(false);
+                wakeOnView.switchToComputerInfoPane();
+            });
+        } else if (!networkUtilService.ping() && wakeOnView.isInfoPane) {
+            wakeOnView.isInfoPane = false;
+            Platform.runLater(() -> wakeOnView.switchToWakeOnPane());
         }
     }
 
