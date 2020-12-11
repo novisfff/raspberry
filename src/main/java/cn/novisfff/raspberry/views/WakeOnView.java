@@ -104,6 +104,10 @@ class WakeOnViewSchedule {
 
     private NetworkUtilService networkUtilService;
 
+    public WakeOnViewSchedule(WakeOnView wakeOnView, NetworkUtilService networkUtilService) {
+        this.wakeOnView = wakeOnView;
+        this.networkUtilService = networkUtilService;
+    }
 
     @Scheduled(initialDelay = 2000, fixedRate = 200)
     private void wakeOnPaneCheckTask() {
