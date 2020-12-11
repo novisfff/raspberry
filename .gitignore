@@ -3,7 +3,7 @@
 /.mvn/
 /target/
 /workspace.xml
-/HELP.md
+HELP.md
 
 *.log
 /.log/

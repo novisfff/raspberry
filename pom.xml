@@ -46,13 +46,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/de.roskenet/springboot-javafx-support -->
-        <dependency>
-            <groupId>de.roskenet</groupId>
-            <artifactId>springboot-javafx-support</artifactId>
-            <version>2.1.6</version>
-        </dependency>
-
         <dependency>
             <groupId>cn.novisfff</groupId>
             <artifactId>medusa</artifactId>
