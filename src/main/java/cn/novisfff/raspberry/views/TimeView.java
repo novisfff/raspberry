@@ -80,23 +80,4 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
 
 }
 
-@Component
-class TimeViewSchedule {
 
-    TimeView timeView;
-
-    public TimeViewSchedule(TimeView timeView) {
-        this.timeView = timeView;
-    }
-
-
-    @Scheduled(cron = "*/1 * * * * ?")
-    private void timePaneTask() {
-        if (timeView.timeClock == null) {
-            return;
-        }
-        Platform.runLater(() -> timeView.timeClock.setTime(System.currentTimeMillis() / 1000));
-
-    }
-
-}

@@ -81,47 +81,13 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
         });
     }
 
-    void switchToWakeOnPane() {
+    public void switchToWakeOnPane() {
         homeView.leftPane.getChildren().setAll(wakeOnPane);
     }
 
-    void switchToComputerInfoPane() {
+    public void switchToComputerInfoPane() {
         homeView.leftPane.getChildren().setAll(computerInfoView.computerInfoPane);
     }
 
 }
 
-
-
-@Component
-@Conditional(LinuxCondition.class)
-class WakeOnViewSchedule {
-
-    private WakeOnView wakeOnView;
-
-    private NetworkUtilService networkUtilService;
-
-    public WakeOnViewSchedule(WakeOnView wakeOnView, NetworkUtilService networkUtilService) {
-        this.wakeOnView = wakeOnView;
-        this.networkUtilService = networkUtilService;
-    }
-
-    @Scheduled(initialDelay = 2000, fixedDelay = 500)
-    private void wakeOnPaneCheckTask() {
-        if (wakeOnView.wakeOnButton == null) {
-            return;
-        }
-        boolean pingResult = networkUtilService.ping();
-        if (pingResult && !wakeOnView.isInfoPane) {
-            wakeOnView.isInfoPane = true;
-            Platform.runLater(() -> {
-                wakeOnView.progressPane.setVisible(false);
-                wakeOnView.switchToComputerInfoPane();
-            });
-        } else if (!pingResult && wakeOnView.isInfoPane) {
-            wakeOnView.isInfoPane = false;
-            Platform.runLater(() -> wakeOnView.switchToWakeOnPane());
-        }
-    }
-
-}
