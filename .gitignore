@@ -1,10 +1,9 @@
-# Default ignored files
-/.idea/
-/.mvn/
-/target/
+.mvn/
+target/
 /workspace.xml
 HELP.md
 
+### log file ###
 *.log
 /.log/
 /log/
@@ -14,3 +13,17 @@ HELP.md
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
