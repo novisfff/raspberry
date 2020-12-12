@@ -20,6 +20,7 @@
         <module>raspberry-core</module>
     </modules>
 
+
     <build>
         <plugins>
             <plugin>
@@ -30,6 +31,17 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.ftl</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
     </build>
 
 </project>

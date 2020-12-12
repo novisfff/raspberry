@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ import java.io.IOException;
  */
 @Component
 public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+
+    private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     private ConfigurableApplicationContext applicationContext;
 
@@ -70,6 +74,8 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
             });
 
             switchToWakeOnPane();
+
+            logger.info("加载 WakenOnView");
 
         });
     }

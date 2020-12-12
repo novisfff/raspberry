@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -26,6 +28,8 @@ import java.io.IOException;
  */
 @Component
 public class HomeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+
+    private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     @FXML
     Pane rightPane2;
@@ -106,6 +110,8 @@ public class HomeView implements ApplicationListener<JavafxApplication.StageRead
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        logger.info("加载 HomeView");
 
     }
 }

@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,8 @@ import java.util.Locale;
  */
 @Component
 public class TimeView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateTime {
+
+    private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     private ConfigurableApplicationContext applicationContext;
 
@@ -60,6 +64,8 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
             timePane.getChildren().setAll(timeClock);
 
             homeView.timePane.getChildren().setAll(root);
+
+            logger.info("加载 TimeView");
         });
     }
 

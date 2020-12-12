@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ import java.io.IOException;
  */
 @Component
 public class ComputerInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateComputerInfo {
+
+    private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     private ConfigurableApplicationContext applicationContext;
 
@@ -78,6 +82,8 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
             //TODO 动态获取内存总量
             memoryGauge = buildMemoryGauge(16);
             memoryPane.getChildren().setAll(memoryGauge);
+
+            logger.info("加载 ComputerInfoView");
 
         });
     }
