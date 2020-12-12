@@ -1,7 +1,6 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
-import cn.novisfff.raspberry.service.NetworkUtilService;
 import eu.hansolo.medusa.Clock;
 import eu.hansolo.medusa.ClockBuilder;
 import javafx.application.Platform;
@@ -23,18 +22,15 @@ import java.util.Locale;
  * @date ：Created in 2020/12/9
  */
 @Component
-public class TimeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+public class TimeView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateTime {
 
     private ConfigurableApplicationContext applicationContext;
 
     private HomeView homeView;
 
-    private NetworkUtilService networkUtilService;
-
-    public TimeView(ConfigurableApplicationContext applicationContext, HomeView homeView, NetworkUtilService networkUtilService) {
+    public TimeView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
-        this.networkUtilService = networkUtilService;
     }
 
     @FXML
@@ -79,6 +75,13 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
                 .backgroundPaint(new Color(0, 0, 0, 0.5))
                 .dateColor(Color.WHITE)
                 .build();
+    }
+
+    @Override
+    public void setTime(long seconds) {
+        if(timeClock != null) {
+            Platform.runLater(() -> timeClock.setTime(seconds));
+        }
     }
 
 }

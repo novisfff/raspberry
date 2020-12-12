@@ -1,4 +1,4 @@
-package cn.novisfff.raspberry.service;
+package cn.novisfff.raspberry.utils;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
  */
 
 @Component
-public class SysInfoUtilService {
+public class SysInfoUtil {
 
     /**
      * @see Sigar
@@ -34,22 +34,22 @@ public class SysInfoUtilService {
      * create time: 2020/9/7
      *
      * @param
-     * @return double[] 最后一位为平均占用率，前几位为每颗CPU占用
+     * @return double[] 第一位为平均占用率，后几位为每颗CPU占用
      */
-    public double[] getCPUUsed() {
+    public static double[] getCPUUsed() {
 
-        CpuPerc cpuList[] = null;
+        CpuPerc[] cpuList = null;
 
         try {
             cpuList = sigar.getCpuPercList();
-            double[] doubles = new double[cpuList.length + 1];
+            double[] used = new double[cpuList.length + 1];
             double totalUsed = 0;
             for (int i = 0; i < cpuList.length; i++) {
-                doubles[i] = cpuList[i].getCombined();
-                totalUsed += doubles[i];
+                used[i + 1] = cpuList[i].getCombined();
+                totalUsed += used[i];
             }
-            doubles[cpuList.length] = totalUsed / cpuList.length;
-            return doubles;
+            used[0] = totalUsed / cpuList.length;
+            return used;
         } catch (SigarException e) {
             e.printStackTrace();
             return null;
@@ -63,7 +63,7 @@ public class SysInfoUtilService {
      * @param
      * @return int 占用内存（MB）
      */
-    public int getUsedMemory() {
+    public static int getUsedMemory() {
 
         try {
             Mem mem = sigar.getMem();
@@ -75,10 +75,25 @@ public class SysInfoUtilService {
     }
 
     /**
+     * 获取总内存
+     * @return
+     */
+    public static int getTotalMemory() {
+
+        try {
+            Mem mem = sigar.getMem();
+            return new Long(mem.getTotal() / (1024L * 1024L)).intValue();
+        } catch (SigarException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
      * 获取cpu温度信息
      * @return
      */
-    public double getCPUTemp() {
+    public static double getCPUTemp() {
         // 获取当前程序的运行进对象
         Runtime runtime = Runtime.getRuntime();
         Process process = null;

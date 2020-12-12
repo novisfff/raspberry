@@ -17,12 +17,13 @@ import java.io.IOException;
 
 /**
  * <h1>电脑信息JavaFx页面</h1>
+ *
  * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/11
- * @see cn.novisfff.raspberry.views.schedule.SysInfoViewSchedule
+ * @see cn.novisfff.raspberry.views.schedule.UpdateSysInfoSchedule
  */
 @Component
-public class ComputerInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+public class ComputerInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateComputerInfo {
 
     private ConfigurableApplicationContext applicationContext;
 
@@ -47,6 +48,7 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
 
     /**
      * 初始化页面
+     *
      * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
      */
     @Override
@@ -73,7 +75,8 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
             gpuTempGauge = buildTempGauge();
             gpuTempPane.getChildren().setAll(gpuTempGauge);
 
-            memoryGauge = buildMemoryGauge();
+            //TODO 动态获取内存总量
+            memoryGauge = buildMemoryGauge(16);
             memoryPane.getChildren().setAll(memoryGauge);
 
         });
@@ -107,7 +110,7 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .maxValue(100)
                 .valueColor(Color.WHITE)
                 .barColor(Color.LIME)
-                .needleColor(new Color(0,0.73,0.72,1))
+                .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)
                 .threshold(70)
                 .thresholdColor(Color.RED)
@@ -117,13 +120,15 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
 
     /**
      * 构建绘制内存使用率的{@link Gauge}
+     *
+     * @param totalMemory 总内存量，单位GB
      */
-    private Gauge buildMemoryGauge() {
+    private Gauge buildMemoryGauge(double totalMemory) {
         return GaugeBuilder
                 .create()
                 .skinType(Gauge.SkinType.BULLET_CHART)
                 .prefSize(340, 60)
-                .maxValue(16)
+                .maxValue(totalMemory)
                 .decimals(1)
                 .barColor(Color.WHITE)
                 .barBackgroundColor(Color.WHITE)
@@ -132,11 +137,45 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .valueColor(Color.WHITE)
                 .barColor(new Color(0.1, 0.7, 1, 1))
                 .sectionsVisible(true)
-                .sections(new Section(0, 8, new Color(0.1, 1, 0.1, 0.3)),
-                        new Section(8, 12, new Color(1, 1, 0.3, 0.3)),
-                        new Section(12, 16, new Color(1, 0.1, 0.1, 0.3)))
+                .sections(new Section(0, totalMemory * 0.5, new Color(0.1, 1, 0.1, 0.3)),
+                        new Section(totalMemory * 0.5, totalMemory * 0.75, new Color(1, 1, 0.3, 0.3)),
+                        new Section(totalMemory * 0.75, totalMemory, new Color(1, 0.1, 0.1, 0.3)))
                 .majorTickSpace(1)
                 .build();
     }
 
+    @Override
+    public void setCpuUsed(double load) {
+        if(cpuUsedGauge != null) {
+            Platform.runLater(() -> cpuUsedGauge.setValue(load * 100));
+        }
+    }
+
+    @Override
+    public void setGpuUsed(double load) {
+        if(gpuUsedGauge != null) {
+            Platform.runLater(() -> gpuUsedGauge.setValue(load * 100));
+        }
+    }
+
+    @Override
+    public void setCpuTemperature(double temperature) {
+        if(cpuTempGauge != null) {
+            Platform.runLater(() -> cpuTempGauge.setValue(temperature));
+        }
+    }
+
+    @Override
+    public void setGpuTemperature(double temperature) {
+        if(gpuTempGauge != null) {
+            Platform.runLater(() -> gpuTempGauge.setValue(temperature));
+        }
+    }
+
+    @Override
+    public void setMemoryUsed(double used) {
+        if(memoryGauge != null) {
+            Platform.runLater(() -> memoryGauge.setValue(used));
+        }
+    }
 }

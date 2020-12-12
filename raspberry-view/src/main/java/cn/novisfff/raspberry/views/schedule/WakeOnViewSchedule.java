@@ -1,12 +1,14 @@
 package cn.novisfff.raspberry.views.schedule;
 
 import cn.novisfff.raspberry.condition.LinuxCondition;
-import cn.novisfff.raspberry.service.NetworkUtilService;
+import cn.novisfff.raspberry.utils.NetworkUtil;
 import cn.novisfff.raspberry.views.WakeOnView;
 import javafx.application.Platform;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+//TODO 重写这部分的接口
 
 /**
  * 唤醒页面定时器
@@ -22,11 +24,8 @@ public class WakeOnViewSchedule {
 
     private WakeOnView wakeOnView;
 
-    private NetworkUtilService networkUtilService;
-
-    public WakeOnViewSchedule(WakeOnView wakeOnView, NetworkUtilService networkUtilService) {
+    public WakeOnViewSchedule(WakeOnView wakeOnView) {
         this.wakeOnView = wakeOnView;
-        this.networkUtilService = networkUtilService;
     }
 
     @Scheduled(initialDelay = 2000, fixedDelay = 500)
@@ -34,7 +33,7 @@ public class WakeOnViewSchedule {
         if (wakeOnView.wakeOnButton == null) {
             return;
         }
-        boolean pingResult = networkUtilService.ping();
+        boolean pingResult = NetworkUtil.ping();
         if (pingResult && !wakeOnView.isInfoPane) {
             wakeOnView.isInfoPane = true;
             Platform.runLater(() -> {

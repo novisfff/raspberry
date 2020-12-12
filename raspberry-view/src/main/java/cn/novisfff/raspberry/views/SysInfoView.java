@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.utils.SysInfoUtil;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import eu.hansolo.medusa.Section;
@@ -23,7 +24,7 @@ import java.io.IOException;
  * @date ：Created in 2020/12/10
  */
 @Component
-public class SysInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+public class SysInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateSystemInfo{
 
     private ConfigurableApplicationContext applicationContext;
 
@@ -86,7 +87,11 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
             cpuLoadGauge = buildCpuLoadGauge();
             cpuPane.getChildren().setAll(cpuLoadGauge);
 
-            memoryGauge = buildMemoryGauge();
+            int totalMemory = 3700;
+            if(applicationContext.getEnvironment().getProperty("os.name").contains("Linux")) {
+                totalMemory = SysInfoUtil.getTotalMemory();
+            }
+            memoryGauge = buildMemoryGauge(totalMemory);
             memoryPane.getChildren().setAll(memoryGauge);
 
             temperatureGauge = buildTemperatureGauge();
@@ -137,18 +142,18 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
     /**
      * 构建绘制内存使用率的{@link Gauge}
      */
-    private Gauge buildMemoryGauge() {
+    private Gauge buildMemoryGauge(double totalMemory) {
         return GaugeBuilder
                 .create()
                 .skinType(Gauge.SkinType.DIGITAL)
                 .prefSize(120, 120)
-                .maxValue(3741)
+                .maxValue(totalMemory)
                 .decimals(0)
                 .valueColor(Color.WHITE)
                 .sectionsVisible(true)
-                .sections(new Section(0, 2000, Color.LIME),
-                        new Section(2000, 3000, Color.ORANGE),
-                        new Section(3000, 3741, Color.RED))
+                .sections(new Section(0, totalMemory * 0.5, Color.LIME),
+                        new Section(totalMemory * 0.5, totalMemory * 0.75, Color.ORANGE),
+                        new Section(totalMemory * 0.75, totalMemory, Color.RED))
                 .build();
     }
 
@@ -169,6 +174,35 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .thresholdColor(Color.RED)
                 .checkThreshold(true)
                 .build();
+    }
+
+    @Override
+    public void setCpuLoad(double[] loads) {
+        if(cpuLoadGauge != null) {
+            Platform.runLater(() -> {
+                if (loads != null) {
+                    cpu0LoadGauge.setValue(loads[1] * 100);
+                    cpu1LoadGauge.setValue(loads[2] * 100);
+                    cpu2LoadGauge.setValue(loads[3] * 100);
+                    cpu3LoadGauge.setValue(loads[4] * 100);
+                    cpuLoadGauge.setValue(loads[0] * 100);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void setMemoryUsed(double used) {
+        if(memoryGauge != null) {
+            Platform.runLater(() -> memoryGauge.setValue(used));
+        }
+    }
+
+    @Override
+    public void setTemperature(double temperature) {
+        if(temperatureGauge != null) {
+            Platform.runLater(() -> temperatureGauge.setValue(temperature));
+        }
     }
 
 }

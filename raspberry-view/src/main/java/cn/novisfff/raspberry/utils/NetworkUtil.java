@@ -1,7 +1,9 @@
-package cn.novisfff.raspberry.service;
+package cn.novisfff.raspberry.utils;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+
 
 import java.io.IOException;
 
@@ -12,24 +14,27 @@ import java.io.IOException;
  */
 
 @Component
-public class NetworkUtilService {
+public class NetworkUtil{
 
-    private final String ip;
-    private final String mac;
-    private final String broadcast;
 
-    public NetworkUtilService(@Value("${networkUtil.ip}")String ip,
+    static String ip;
+
+    static String mac;
+
+    static String broadcast;
+
+    public NetworkUtil(@Value("${networkUtil.ip}")String ip,
                               @Value("${networkUtil.mac}")String mac,
                               @Value("${networkUtil.broadcast}")String broadcast) {
-        this.ip = ip;
-        this.mac = mac;
-        this.broadcast = broadcast;
+        NetworkUtil.ip = ip;
+        NetworkUtil.mac = mac;
+        NetworkUtil.broadcast = broadcast;
     }
 
     /**
      * 通过指令wakeonlan启动电脑
      */
-    public void wakeOnLan() {
+    public static void wakeOnLan() {
         Runtime runtime = Runtime.getRuntime();
         try {
             runtime.exec("wakeonlan -i " + broadcast + " " + mac);
@@ -41,7 +46,8 @@ public class NetworkUtilService {
     /**
      * 返回是否能ping通电脑
      */
-    public boolean ping() {
+    public static boolean ping() {
+        System.out.println(ip);
         try {
             return 0 == Runtime.getRuntime().exec("ping -c 1 " + ip).waitFor();
         } catch (InterruptedException | IOException e) {

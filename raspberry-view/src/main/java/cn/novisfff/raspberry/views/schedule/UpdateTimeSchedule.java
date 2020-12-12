@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views.schedule;
 
 import cn.novisfff.raspberry.views.TimeView;
+import cn.novisfff.raspberry.views.UpdateTime;
 import javafx.application.Platform;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,22 +14,17 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class TimeViewSchedule {
+public class UpdateTimeSchedule {
 
-    TimeView timeView;
+    UpdateTime updateTime;
 
-    public TimeViewSchedule(TimeView timeView) {
-        this.timeView = timeView;
+    public UpdateTimeSchedule(UpdateTime updateTime) {
+        this.updateTime = updateTime;
     }
-
 
     @Scheduled(cron = "*/1 * * * * ?")
     private void timePaneTask() {
-        if (timeView.timeClock == null) {
-            return;
-        }
-        Platform.runLater(() -> timeView.timeClock.setTime(System.currentTimeMillis() / 1000));
-
+        updateTime.setTime(System.currentTimeMillis() / 1000);
     }
 
 }

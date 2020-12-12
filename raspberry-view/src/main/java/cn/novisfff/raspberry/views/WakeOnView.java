@@ -1,7 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
-import cn.novisfff.raspberry.service.NetworkUtilService;
+import cn.novisfff.raspberry.utils.NetworkUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,14 +28,12 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
     private ComputerInfoView computerInfoView;
 
-    private NetworkUtilService networkUtilService;
 
     public WakeOnView(ConfigurableApplicationContext applicationContext, HomeView homeView,
-                      ComputerInfoView computerInfoView, NetworkUtilService networkUtilService) {
+                      ComputerInfoView computerInfoView) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
         this.computerInfoView = computerInfoView;
-        this.networkUtilService = networkUtilService;
     }
 
     Pane wakeOnPane;
@@ -68,7 +66,7 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
             wakeOnButton.setOnMouseEntered(mouseEvent -> {
                 progressPane.setVisible(true);
-                networkUtilService.wakeOnLan();
+                NetworkUtil.wakeOnLan();
             });
 
             switchToWakeOnPane();
