@@ -32,11 +32,10 @@ public class JavafxApplication extends Application {
      * <p>
      * 在JavaFx启动线程中初始化Spring，并将javaFx相关组件注册到Spring中
      *
-     * @throws Exception
      * @author novisfff
      */
     @Override
-    public void init() throws Exception {
+    public void init() {
 
         ApplicationContextInitializer<GenericApplicationContext> initializer = ac -> {
             ac.registerBean(Application.class, () -> this);
@@ -56,10 +55,9 @@ public class JavafxApplication extends Application {
      * 表明JavaFx相关视图部分可以进行初始化
      *
      * @param primaryStage
-     * @throws Exception
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.context.publishEvent(new StageReadyEvent(primaryStage));
     }
 
@@ -68,10 +66,9 @@ public class JavafxApplication extends Application {
      * <p>
      * 关闭Spring与JavaFx
      *
-     * @throws Exception
      */
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         this.context.close();
         Platform.exit();
     }
