@@ -47,7 +47,6 @@ public class NetworkUtil{
      * 返回是否能ping通电脑
      */
     public static boolean ping() {
-        System.out.println(ip);
         try {
             return 0 == Runtime.getRuntime().exec("ping -c 1 " + ip).waitFor();
         } catch (InterruptedException | IOException e) {
