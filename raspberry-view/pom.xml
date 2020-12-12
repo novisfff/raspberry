@@ -15,7 +15,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <javafx.version>13.0.2</javafx.version>
+        <javafx.version>11</javafx.version>
     </properties>
 
     <dependencies>
