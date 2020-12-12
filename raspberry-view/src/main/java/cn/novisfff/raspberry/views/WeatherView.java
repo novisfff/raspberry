@@ -40,7 +40,7 @@ public class WeatherView implements ApplicationListener<JavafxApplication.StageR
             Pane root = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("weather.fxml"));
-                url = getClass().getResource("weather.html").toExternalForm();
+                //url = getClass().getResource("weather.html").toExternalForm();
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 root = fxmlLoader.load();
             } catch (IOException exception) {
@@ -48,7 +48,7 @@ public class WeatherView implements ApplicationListener<JavafxApplication.StageR
             }
 
             WebEngine engine = browser.getEngine();
-            engine.load(url);
+            engine.load("https://github.com");
 
             homeController.rightPane0.getChildren().setAll(root);
 
