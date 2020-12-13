@@ -13,14 +13,8 @@
        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="300.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
            <children>
                <Label text="cpu" textFill="#000002" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
-                   <font>
-                       <Font name="Source Han Sans CN Bold Bold" size="18.0" />
-                   </font>
                </Label>
                <Label text="gpu" textFill="#000002" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="165.0">
-                   <font>
-                       <Font name="Source Han Sans CN Bold Bold" size="18.0" />
-                   </font>
                </Label>
                <Line endX="190.0" startX="-100.0" stroke="#000002" strokeWidth="2.0" style="-fx-stroke-dash-array: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="150.0" />
                <Line endX="190.0" startX="-100.0" stroke="#000002" strokeWidth="2.0" style="-fx-stroke-dash-array: 5;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" />
