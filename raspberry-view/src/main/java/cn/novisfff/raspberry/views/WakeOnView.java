@@ -22,7 +22,7 @@ import java.io.IOException;
  * @date ：Created in 2020/12/9
  */
 @Component
-public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateWakeOnStatus{
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
@@ -73,26 +73,33 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
                 NetworkUtil.wakeOnLan();
             });
 
-            switchToWakeOnPane();
+            homeView.leftPane.getChildren().setAll(wakeOnPane);
 
             logger.info("加载 WakenOnView");
 
         });
     }
 
-    /**
-     * 切换到唤醒开关页面
-     */
+    @Override
     public void switchToWakeOnPane() {
-        homeView.leftPane.getChildren().setAll(wakeOnPane);
+        if(wakeOnPane != null && isInfoPane) {
+            Platform.runLater(() -> {
+                homeView.leftPane.getChildren().setAll(wakeOnPane);
+                progressPane.setVisible(false);
+                isInfoPane = false;
+            });
+        }
     }
 
-    /**
-     * 切换到电脑信息页面
-     * @see ComputerInfoView
-     */
+    @Override
     public void switchToComputerInfoPane() {
-        homeView.leftPane.getChildren().setAll(computerInfoView.computerInfoPane);
+        if(computerInfoView.computerInfoPane != null && !isInfoPane) {
+            Platform.runLater(() -> {
+                homeView.leftPane.getChildren().setAll(computerInfoView.computerInfoPane);
+                progressPane.setVisible(false);
+                isInfoPane = true;
+            });
+        }
     }
 
 }
