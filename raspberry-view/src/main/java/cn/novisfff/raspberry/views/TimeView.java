@@ -75,11 +75,11 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
     private Clock buildTimeClock() {
         return ClockBuilder
                 .create()
-                .prefSize(300, 120)
+                .prefSize(300, 115)
                 .skinType(Clock.ClockSkinType.DIGITAL)
                 .locale(Locale.CHINA).textColor(Color.WHITE)
-                .backgroundPaint(new Color(0, 0, 0, 0.5))
-                .dateColor(Color.WHITE)
+                .textColor(new Color(0,0,0.05,0.9))
+                .dateColor(new Color(0,0,0.05,0.9))
                 .build();
     }
 

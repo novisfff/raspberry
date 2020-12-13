@@ -101,7 +101,8 @@ public class HomeView implements ApplicationListener<JavafxApplication.StageRead
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, width, height);
             scene.setCursor(Cursor.NONE);
-            Font font = Font.loadFont(getClass().getResource("SourceHanSansCNBold.otf").toExternalForm(), 14);
+            Font font = Font.loadFont(getClass().getResource("cyber.ttf").toExternalForm(), 14);
+            System.out.println(font);
             scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
             stage.setScene(scene);
             stage.setFullScreen(true);

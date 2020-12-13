@@ -18,7 +18,7 @@ public class UpdateWeatherSchedule {
         this.heWeather = heWeather;
     }
 
-    @Scheduled(initialDelay = 5000, fixedRate = 3000)
+    @Scheduled(initialDelay = 5000, fixedRate = 300000)
     private void weatherUpdateTask() {
         Weather weatherNow = heWeather.getWeatherNow();
         System.out.println(weatherNow);

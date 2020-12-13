@@ -116,7 +116,7 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .skinType(Gauge.SkinType.FLAT)
                 .prefSize(50, 50)
                 .maxValue(100)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
                 .gradientBarEnabled(true)
                 .gradientBarStops(new Stop(0.0, Color.LIME),
                         new Stop(0.4, Color.YELLOW),
@@ -135,7 +135,7 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .minValue(0)
                 .maxValue(100)
                 .averagingPeriod(20)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
                 .gradientBarEnabled(true)
                 .smoothing(true)
                 .backgroundPaint(new Color(0, 0, 0, 0))
@@ -155,7 +155,10 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .prefSize(120, 120)
                 .maxValue(totalMemory)
                 .decimals(0)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
+                .majorTickMarkColor(Color.CYAN)
+                .tickLabelColor(new Color(0,0,0.05,0))
+                .barColor(Color.RED)
                 .sectionsVisible(true)
                 .sections(new Section(0, totalMemory * 0.5, Color.LIME),
                         new Section(totalMemory * 0.5, totalMemory * 0.75, Color.ORANGE),
@@ -172,7 +175,7 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .skinType(Gauge.SkinType.KPI)
                 .prefSize(100, 100)
                 .maxValue(100)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
                 .barColor(Color.LIME)
                 .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)
