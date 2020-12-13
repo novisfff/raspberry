@@ -17,5 +17,5 @@ networkUtil:
   mac: 80:FA:5B:38:88:A4
 
 heweather:
-  key: ${HEWEATHER_KEY}
+  key: 497dcb61c5994c1d9952323253c1dec3
   location: 108.76,34.02

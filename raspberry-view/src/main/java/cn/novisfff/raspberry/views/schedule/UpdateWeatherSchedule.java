@@ -23,5 +23,4 @@ public class UpdateWeatherSchedule {
         Weather weatherNow = heWeather.getWeatherNow();
         System.out.println(weatherNow);
     }
-
 }
