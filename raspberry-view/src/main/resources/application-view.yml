@@ -15,3 +15,7 @@ networkUtil:
   broadcast: 192.168.1.255
   # 电脑MAC地址
   mac: 80:FA:5B:38:88:A4
+
+heweather:
+  key: ${HEWEATHER_KEY}
+  location: 108.76,34.02
