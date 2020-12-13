@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
+import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -158,7 +159,7 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
                 .valueColor(new Color(0,0,0.05,0.9))
                 .majorTickMarkColor(Color.CYAN)
                 .tickLabelColor(new Color(0,0,0.05,0))
-                .barColor(Color.RED)
+                .barColor(new Color(0.7,0.7,0.15,1))
                 .sectionsVisible(true)
                 .sections(new Section(0, totalMemory * 0.5, Color.LIME),
                         new Section(totalMemory * 0.5, totalMemory * 0.75, Color.ORANGE),

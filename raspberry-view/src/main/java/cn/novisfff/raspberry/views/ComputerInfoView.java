@@ -114,7 +114,7 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .skinType(Gauge.SkinType.KPI)
                 .prefSize(150, 150)
                 .maxValue(100)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
                 .barColor(Color.LIME)
                 .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)
@@ -140,7 +140,7 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .barBackgroundColor(Color.WHITE)
                 .barBorderColor(Color.WHITE)
                 .tickLabelColor(Color.WHITE)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
                 .barColor(new Color(0.1, 0.7, 1, 1))
                 .sectionsVisible(true)
                 .sections(new Section(0, totalMemory * 0.5, new Color(0.1, 1, 0.1, 0.3)),
