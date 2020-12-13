@@ -2,11 +2,14 @@ package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.utils.NetworkUtil;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -46,9 +49,11 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
     public Button wakeOnButton;
 
     @FXML
-    public Pane progressPane;
+    public ImageView buttonImage;
 
     public boolean isInfoPane = false;
+
+    RotateTransition rotateTransition;
 
     /**
      * 初始化页面
@@ -66,10 +71,10 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
                 throw new RuntimeException(exception);
             }
 
-            progressPane.setVisible(false);
+            initRotateTransition();
 
             wakeOnButton.setOnMouseEntered(mouseEvent -> {
-                progressPane.setVisible(true);
+                rotateTransition.play();
                 NetworkUtil.wakeOnLan();
             });
 
@@ -85,7 +90,7 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
         if(wakeOnPane != null && isInfoPane) {
             Platform.runLater(() -> {
                 homeView.leftPane.getChildren().setAll(wakeOnPane);
-                progressPane.setVisible(false);
+                rotateTransition.stop();
                 isInfoPane = false;
             });
         }
@@ -96,10 +101,26 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
         if(computerInfoView.computerInfoPane != null && !isInfoPane) {
             Platform.runLater(() -> {
                 homeView.leftPane.getChildren().setAll(computerInfoView.computerInfoPane);
-                progressPane.setVisible(false);
+                rotateTransition.stop();
                 isInfoPane = true;
             });
         }
+    }
+
+    private void initRotateTransition() {
+        //开始角度
+        double fromAngle=0.0;
+        //结束角度
+        double toAngle=360.0;
+        //根据旋转角度大小计算动画播放持续时间
+        double play_time =Math.abs(toAngle-fromAngle)*0.02;
+        rotateTransition = new  RotateTransition(Duration.seconds(play_time), buttonImage);
+        //设置旋转角度
+        rotateTransition.setFromAngle(fromAngle);
+        rotateTransition.setToAngle(toAngle);
+        // 每次旋转后是否改变旋转方向
+        rotateTransition.setCycleCount(20);
+        rotateTransition.setAutoReverse(false);
     }
 
 }
