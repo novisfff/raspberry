@@ -74,8 +74,8 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
             initRotateTransition();
 
             wakeOnButton.setOnMouseEntered(mouseEvent -> {
-                rotateTransition.play();
                 NetworkUtil.wakeOnLan();
+                rotateTransition.play();
             });
 
             homeView.leftPane.getChildren().setAll(wakeOnPane);
