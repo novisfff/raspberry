@@ -72,7 +72,7 @@ public class HeWeatherImpl implements HeWeather {
         Map<String, String> paramMap = new HashMap<>(8);
         paramMap.put("key", key);
         paramMap.put("location", location);
-        String response = getResponse(AIR_URL, paramMap);
+        String response = getResponse(THREE_DAY_URL, paramMap);
         JSONArray jsonArray = JSON.parseObject(response).getJSONArray("daily");
         for (int i = 0; i < 3; i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);

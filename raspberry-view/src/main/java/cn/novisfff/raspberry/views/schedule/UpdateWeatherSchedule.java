@@ -22,5 +22,9 @@ public class UpdateWeatherSchedule {
     private void weatherUpdateTask() {
         Weather weatherNow = heWeather.getWeatherNow();
         System.out.println(weatherNow);
+        Weather[] threeDay = heWeather.getThreeDay();
+        for (Weather weather : threeDay) {
+            System.out.println(weather);
+        }
     }
 }
