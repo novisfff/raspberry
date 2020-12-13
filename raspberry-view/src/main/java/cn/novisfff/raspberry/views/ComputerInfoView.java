@@ -99,7 +99,7 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
                 .minValue(0)
                 .maxValue(100)
                 .averagingPeriod(20)
-                .valueColor(Color.WHITE)
+                .valueColor(new Color(0,0,0.05,0.9))
                 .smoothing(true)
                 .backgroundPaint(new Color(0, 0, 0, 0))
                 .build();
