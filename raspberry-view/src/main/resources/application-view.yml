@@ -16,11 +16,6 @@ networkUtil:
   # 电脑MAC地址
   mac: 80:FA:5B:38:88:A4
 
-# 树莓派配置
-raspberry:
-  # 树莓派CPU核心数
-  cpuCore: 4
-
 # 和风天气配置
 heweather:
   # 和风天气key
