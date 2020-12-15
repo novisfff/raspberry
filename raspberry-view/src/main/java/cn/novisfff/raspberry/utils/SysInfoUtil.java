@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
  * @date ：Created in 2020/12/10
  */
 
-@Component
 public class SysInfoUtil {
 
     /**

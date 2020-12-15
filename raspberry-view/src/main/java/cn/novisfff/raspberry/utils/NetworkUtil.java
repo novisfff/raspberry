@@ -13,23 +13,8 @@ import java.io.IOException;
  * @date ：Created in 2020/12/9
  */
 
-@Component
 public class NetworkUtil{
 
-
-    static String ip;
-
-    static String mac;
-
-    static String broadcast;
-
-    public NetworkUtil(@Value("${networkUtil.ip}")String ip,
-                              @Value("${networkUtil.mac}")String mac,
-                              @Value("${networkUtil.broadcast}")String broadcast) {
-        NetworkUtil.ip = ip;
-        NetworkUtil.mac = mac;
-        NetworkUtil.broadcast = broadcast;
-    }
 
     /**
      * 通过指令wakeonlan启动电脑
@@ -37,7 +22,7 @@ public class NetworkUtil{
     public static void wakeOnLan() {
         Runtime runtime = Runtime.getRuntime();
         try {
-            runtime.exec("wakeonlan -i " + broadcast + " " + mac);
+            runtime.exec("wakeonlan -i " + UtilPropertites.broadcast + " " + UtilPropertites.mac);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +33,7 @@ public class NetworkUtil{
      */
     public static boolean ping() {
         try {
-            return 0 == Runtime.getRuntime().exec("ping -c 1 " + ip).waitFor();
+            return 0 == Runtime.getRuntime().exec("ping -c 1 " + UtilPropertites.ip).waitFor();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
             return false;
