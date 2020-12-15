@@ -1,7 +1,7 @@
 package cn.novisfff.raspberry.server.Impl;
 
 import cn.novisfff.raspberry.domain.Weather;
-import cn.novisfff.raspberry.server.HeWeather;
+import cn.novisfff.raspberry.server.WeatherServer;
 import cn.novisfff.raspberry.utils.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @date ：Created in 2020/12/13
  */
 @Service
-public class HeWeatherImpl implements HeWeather {
+public class HeWeatherImpl implements WeatherServer {
 
     private final static String NOW_URL = "https://devapi.qweather.com/v7/weather/now";
     private final static String THREE_DAY_URL = "https://devapi.qweather.com/v7/weather/3d";
@@ -34,7 +34,7 @@ public class HeWeatherImpl implements HeWeather {
 
 
     @Override
-    public Weather getWeatherNow() {
+    public synchronized Weather getWeatherNow() {
         Weather weather = new Weather();
         updateNow(weather);
         updateAir(weather);
@@ -42,7 +42,7 @@ public class HeWeatherImpl implements HeWeather {
     }
 
     @Override
-    public Weather[] getThreeDay() {
+    public synchronized Weather[] getThreeDay() {
         Weather[] weathers = new Weather[3];
         updateThreeDay(weathers);
         return weathers;

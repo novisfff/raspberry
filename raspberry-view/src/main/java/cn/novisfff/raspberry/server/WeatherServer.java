@@ -7,7 +7,7 @@ import cn.novisfff.raspberry.domain.Weather;
  * @date ：Created in 2020/12/13
  */
 
-public interface HeWeather {
+public interface WeatherServer {
 
     /**
      * 获取当前天气

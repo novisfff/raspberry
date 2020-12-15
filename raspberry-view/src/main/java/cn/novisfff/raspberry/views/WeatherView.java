@@ -127,8 +127,16 @@ public class WeatherView implements ApplicationListener<JavafxApplication.StageR
     }
 
 
+    /**
+     * 图像缓存
+     */
     private Map<Integer, Image> imageCache = new HashMap<>();
 
+    /**
+     * 获取天气图标
+     * @param iconIndex
+     * @return
+     */
     private Image getIcon(Integer iconIndex) {
         if (iconIndex == null) {
             iconIndex = 999;

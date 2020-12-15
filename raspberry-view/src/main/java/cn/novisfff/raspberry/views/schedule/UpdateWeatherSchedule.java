@@ -1,7 +1,7 @@
 package cn.novisfff.raspberry.views.schedule;
 
 import cn.novisfff.raspberry.domain.Weather;
-import cn.novisfff.raspberry.server.HeWeather;
+import cn.novisfff.raspberry.server.WeatherServer;
 import cn.novisfff.raspberry.views.UpdateWeather;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateWeatherSchedule {
 
-    HeWeather heWeather;
+    WeatherServer heWeather;
 
     UpdateWeather updateWeather;
 
-    public UpdateWeatherSchedule(HeWeather heWeather, UpdateWeather updateWeather) {
+    public UpdateWeatherSchedule(WeatherServer heWeather, UpdateWeather updateWeather) {
         this.heWeather = heWeather;
         this.updateWeather = updateWeather;
     }

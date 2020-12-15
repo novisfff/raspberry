@@ -12,15 +12,15 @@
    <children>
       <ImageView fx:id="nowIcon" fitHeight="64.0" fitWidth="64.0" layoutX="30.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/pic/bw-64/100.png" />
+            <Image url="@/pic/bw-64/999.png" />
          </image>
       </ImageView>
-      <Label fx:id="nowTemp" layoutX="115.0" layoutY="30.0" text="-4°" textFill="#000050">
+      <Label fx:id="nowTemp" layoutX="115.0" layoutY="30.0" text="0°" textFill="#000050">
          <font>
             <Font name="Source Han Sans CN Bold Bold" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="nowText" layoutX="115.0" layoutY="70.0" text="多云" textFill="#000050">
+      <Label fx:id="nowText" layoutX="115.0" layoutY="70.0" text="N/A" textFill="#000050">
          <font>
             <Font name="Source Han Sans CN Bold Bold" size="16.0" />
          </font>
@@ -39,10 +39,10 @@
          <children>
             <ImageView fx:id="day1Icon" fitHeight="64.0" fitWidth="64.0" layoutX="13.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@/pic/bw-64/100.png" />
+                  <Image url="@/pic/bw-64/999.png" />
                </image>
             </ImageView>
-            <Label fx:id="day1Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-6°/4°" textFill="#000050">
+            <Label fx:id="day1Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-0°/0°" textFill="#000050">
                <font>
                   <Font name="Source Han Sans CN Bold Bold" size="14.0" />
                </font>
@@ -53,10 +53,10 @@
          <children>
             <ImageView fx:id="day2Icon" fitHeight="64.0" fitWidth="64.0" layoutX="13.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@/pic/bw-64/100.png" />
+                  <Image url="@/pic/bw-64/999.png" />
                </image>
             </ImageView>
-            <Label fx:id="day2Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-6°/4°" textFill="#000050">
+            <Label fx:id="day2Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-0°/0°" textFill="#000050">
                <font>
                   <Font name="Source Han Sans CN Bold Bold" size="14.0" />
                </font>
@@ -67,10 +67,10 @@
          <children>
             <ImageView fx:id="day3Icon" fitHeight="64.0" fitWidth="64.0" layoutX="13.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@/pic/bw-64/100.png" />
+                  <Image url="@/pic/bw-64/999.png" />
                </image>
             </ImageView>
-            <Label fx:id="day3Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-6°/4°" textFill="#000050">
+            <Label fx:id="day3Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-0°/0°" textFill="#000050">
                <font>
                   <Font name="Source Han Sans CN Bold Bold" size="14.0" />
                </font>
