@@ -4,6 +4,7 @@ import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +18,6 @@ import java.io.InputStreamReader;
  */
 
 public class SysInfoUtil {
-
-    private static final int CPU_CORE_SIZE = 4;
 
     /**
      * @see Sigar
@@ -42,13 +41,13 @@ public class SysInfoUtil {
 
         try {
             cpuList = sigar.getCpuPercList();
-            double[] used = new double[CPU_CORE_SIZE + 1];
+            double[] used = new double[cpuList.length + 1];
             double totalUsed = 0;
-            for (int i = 0; i < CPU_CORE_SIZE; i++) {
+            for (int i = 0; i < cpuList.length; i++) {
                 used[i + 1] = cpuList[i].getCombined();
-                totalUsed += used[i];
+                totalUsed += used[i + 1];
             }
-            used[0] = totalUsed /CPU_CORE_SIZE;
+            used[0] = totalUsed / cpuList.length;
             return used;
         } catch (SigarException e) {
             e.printStackTrace();
