@@ -17,11 +17,15 @@ public class UtilPropertites {
 
     static String broadcast;
 
+    static int cpuCoreSize;
+
     public UtilPropertites(@Value("${networkUtil.ip}")String ip,
                        @Value("${networkUtil.mac}")String mac,
-                       @Value("${networkUtil.broadcast}")String broadcast) {
+                       @Value("${networkUtil.broadcast}")String broadcast,
+                           @Value("raspberry.cpuCore")int cpuCoreSize) {
         UtilPropertites.ip = ip;
         UtilPropertites.mac = mac;
         UtilPropertites.broadcast = broadcast;
+        UtilPropertites.cpuCoreSize = cpuCoreSize;
     }
 }

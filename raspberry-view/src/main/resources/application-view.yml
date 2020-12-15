@@ -16,6 +16,14 @@ networkUtil:
   # 电脑MAC地址
   mac: 80:FA:5B:38:88:A4
 
+# 树莓派配置
+raspberry:
+  # 树莓派CPU核心数
+  cpuCore: 4
+
+# 和风天气配置
 heweather:
+  # 和风天气key
   key: 497dcb61c5994c1d9952323253c1dec3
+  # 位置信息
   location: 108.76,34.02

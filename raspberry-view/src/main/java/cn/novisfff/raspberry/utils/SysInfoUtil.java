@@ -41,13 +41,13 @@ public class SysInfoUtil {
 
         try {
             cpuList = sigar.getCpuPercList();
-            double[] used = new double[cpuList.length + 1];
+            double[] used = new double[UtilPropertites.cpuCoreSize + 1];
             double totalUsed = 0;
-            for (int i = 0; i < cpuList.length; i++) {
+            for (int i = 0; i < UtilPropertites.cpuCoreSize; i++) {
                 used[i + 1] = cpuList[i].getCombined();
                 totalUsed += used[i];
             }
-            used[0] = totalUsed / cpuList.length;
+            used[0] = totalUsed / UtilPropertites.cpuCoreSize;
             return used;
         } catch (SigarException e) {
             e.printStackTrace();
