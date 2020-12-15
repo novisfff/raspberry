@@ -29,6 +29,9 @@
 
     <!-- 日志输出级别 -->
     <root level="INFO">
+        <appender-ref ref="FILE"/>
+    </root>
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

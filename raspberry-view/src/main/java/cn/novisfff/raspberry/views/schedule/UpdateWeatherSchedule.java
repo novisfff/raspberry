@@ -2,6 +2,7 @@ package cn.novisfff.raspberry.views.schedule;
 
 import cn.novisfff.raspberry.domain.Weather;
 import cn.novisfff.raspberry.server.HeWeather;
+import cn.novisfff.raspberry.views.UpdateWeather;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +15,22 @@ public class UpdateWeatherSchedule {
 
     HeWeather heWeather;
 
-    public UpdateWeatherSchedule(HeWeather heWeather) {
+    UpdateWeather updateWeather;
+
+    public UpdateWeatherSchedule(HeWeather heWeather, UpdateWeather updateWeather) {
         this.heWeather = heWeather;
+        this.updateWeather = updateWeather;
     }
 
-    @Scheduled(initialDelay = 5000, fixedRate = 300000)
-    private void weatherUpdateTask() {
+    @Scheduled(initialDelay = 5000, fixedRate = 600000)
+    private void weatherUpdateNowTask() {
         Weather weatherNow = heWeather.getWeatherNow();
-        System.out.println(weatherNow);
+        updateWeather.updateNow(weatherNow);
+    }
+
+    @Scheduled(initialDelay = 5000, fixedRate = 36000000)
+    private void weatherUpdateThreeTask() {
         Weather[] threeDay = heWeather.getThreeDay();
-        for (Weather weather : threeDay) {
-            System.out.println(weather);
-        }
+        updateWeather.updateThreeDay(threeDay);
     }
 }

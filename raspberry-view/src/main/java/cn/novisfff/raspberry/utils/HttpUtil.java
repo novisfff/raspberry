@@ -28,6 +28,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie2;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +49,8 @@ import java.util.concurrent.TimeUnit;
  * @since 15/11/4.
  */
 public class HttpUtil {
+
+    private final static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     private static PoolingHttpClientConnectionManager cm;
     private static IdleConnectionMonitorThread monitor;
@@ -99,7 +103,7 @@ public class HttpUtil {
             List<NameValuePair> pairs = convertParameters(paramMap);
             uriBuilder.setParameters(pairs);
         }
-        System.out.println(uriBuilder.toString());
+        logger.debug(uriBuilder.toString());
         HttpGet request = new HttpGet(uriBuilder.toString());
         if (headerMap != null && headerMap.size() > 0) {
             for (Entry<String, String> param : headerMap.entrySet()) {
