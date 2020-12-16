@@ -17,12 +17,12 @@
       </ImageView>
       <Label fx:id="nowTemp" layoutX="115.0" layoutY="30.0" text="0°" textFill="#000050">
          <font>
-            <Font name="Source Han Sans CN Bold Bold" size="22.0" />
+            <Font name="Source Han Sans CN Bold Bold" size="26.0" />
          </font>
       </Label>
       <Label fx:id="nowText" layoutX="115.0" layoutY="70.0" text="N/A" textFill="#000050">
          <font>
-            <Font name="Source Han Sans CN Bold Bold" size="16.0" />
+            <Font name="Source Han Sans CN Bold Bold" size="18.0" />
          </font>
       </Label>
       <Pane layoutX="37.0" layoutY="93.0" prefHeight="20.0" prefWidth="50.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #000033;">
@@ -44,7 +44,7 @@
             </ImageView>
             <Label fx:id="day1Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-0°/0°" textFill="#000050">
                <font>
-                  <Font name="Source Han Sans CN Bold Bold" size="14.0" />
+                  <Font name="Source Han Sans CN Bold Bold" size="16.0" />
                </font>
             </Label>
          </children>
@@ -58,7 +58,7 @@
             </ImageView>
             <Label fx:id="day2Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-0°/0°" textFill="#000050">
                <font>
-                  <Font name="Source Han Sans CN Bold Bold" size="14.0" />
+                  <Font name="Source Han Sans CN Bold Bold" size="16.0" />
                </font>
             </Label>
          </children>
@@ -72,7 +72,7 @@
             </ImageView>
             <Label fx:id="day3Temp" alignment="CENTER" contentDisplay="CENTER" layoutY="87.0" prefWidth="90.0" text="-0°/0°" textFill="#000050">
                <font>
-                  <Font name="Source Han Sans CN Bold Bold" size="14.0" />
+                  <Font name="Source Han Sans CN Bold Bold" size="16.0" />
                </font>
             </Label>
          </children>
