@@ -29,10 +29,10 @@ public class PcDataHeader implements ApplicationListener<PcDataMessageReadyEvent
             String dataType = rawData[0];
             switch (dataType) {
                 case "GPU_LOAD":
-                    updateComputerInfo.setGpuUsed(Double.parseDouble(rawData[1]));
+                    updateComputerInfo.setGpuUsed(Double.parseDouble(rawData[1]) / 100);
                     break;
                 case "CPU_LOAD":
-                    updateComputerInfo.setCpuUsed(Double.parseDouble(rawData[1]));
+                    updateComputerInfo.setCpuUsed(Double.parseDouble(rawData[1]) / 100);
                     break;
                 case "CPU_TEMP":
                     updateComputerInfo.setCpuTemperature(Double.parseDouble(rawData[1]));
