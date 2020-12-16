@@ -61,12 +61,11 @@ public class SocketThread extends Thread {
                 while (isConnected) {
                     try {
                         String message = bufferedReader.readLine();
-                        logger.info(message);
+                        logger.debug(message);
                         String[] msg = message.split("!!");
                         String msgHeader = msg[0];
                         switch (msgHeader) {
                             case "PC_DATA":
-                                System.out.println(SpringContextUtil.getApplicationContext());
                                 SpringContextUtil.getApplicationContext().publishEvent(new PcDataMessageReadyEvent(msg[1]));
                                 break;
                             default:
