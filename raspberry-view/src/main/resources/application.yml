@@ -2,4 +2,6 @@ spring:
   profiles:
     active: view, core
 
+socket:
+  port: 17230
 

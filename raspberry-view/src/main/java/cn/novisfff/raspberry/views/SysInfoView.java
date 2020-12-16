@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.event.StageReadyEvent;
 import cn.novisfff.raspberry.utils.SysInfoUtil;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
@@ -27,7 +28,7 @@ import java.io.IOException;
  * @date ：Created in 2020/12/10
  */
 @Component
-public class SysInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateSystemInfo{
+public class SysInfoView implements ApplicationListener<StageReadyEvent>, UpdateSystemInfo{
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
@@ -62,10 +63,9 @@ public class SysInfoView implements ApplicationListener<JavafxApplication.StageR
     /**
      * 初始化页面
      *
-     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
      */
     @Override
-    public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+    public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
             Pane root;
             try {

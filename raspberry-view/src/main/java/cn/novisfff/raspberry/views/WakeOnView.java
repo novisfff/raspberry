@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.event.StageReadyEvent;
 import cn.novisfff.raspberry.utils.NetworkUtil;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
@@ -25,7 +26,7 @@ import java.io.IOException;
  * @date ：Created in 2020/12/9
  */
 @Component
-public class WakeOnView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateWakeOnStatus{
+public class WakeOnView implements ApplicationListener<StageReadyEvent>, UpdateWakeOnStatus{
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
@@ -57,10 +58,9 @@ public class WakeOnView implements ApplicationListener<JavafxApplication.StageRe
 
     /**
      * 初始化页面
-     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
      */
     @Override
-    public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+    public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
 
         Platform.runLater(() -> {
             try {

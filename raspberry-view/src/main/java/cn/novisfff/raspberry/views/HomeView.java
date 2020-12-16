@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.event.StageReadyEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -27,7 +28,7 @@ import java.io.IOException;
  * @date ：Created in 2020/12/9
  */
 @Component
-public class HomeView implements ApplicationListener<JavafxApplication.StageReadyEvent> {
+public class HomeView implements ApplicationListener<StageReadyEvent> {
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
@@ -89,10 +90,9 @@ public class HomeView implements ApplicationListener<JavafxApplication.StageRead
     /**
      * 初始化页面
      *
-     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
      */
     @Override
-    public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+    public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
 
         try {
             Stage stage = stageReadyEvent.getStage();

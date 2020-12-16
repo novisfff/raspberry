@@ -19,19 +19,21 @@ import java.util.Map;
  * @author ：<a href="156125813@qq.com">novisfff</a>
  * @date ：Created in 2020/12/13
  */
-@Service
+
 public class HeWeatherImpl implements WeatherServer {
 
     private final static String NOW_URL = "https://devapi.qweather.com/v7/weather/now";
     private final static String THREE_DAY_URL = "https://devapi.qweather.com/v7/weather/3d";
     private final static String AIR_URL = "https://devapi.qweather.com/v7/air/now";
 
-    @Value("${heweather.key}")
     private String key;
 
-    @Value("${heweather.location}")
     private String location;
 
+    public HeWeatherImpl(String key, String location) {
+        this.key = key;
+        this.location = location;
+    }
 
     @Override
     public synchronized Weather getWeatherNow() {

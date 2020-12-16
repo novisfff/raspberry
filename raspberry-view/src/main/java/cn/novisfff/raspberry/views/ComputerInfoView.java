@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.event.StageReadyEvent;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import eu.hansolo.medusa.Section;
@@ -25,7 +26,7 @@ import java.io.IOException;
  * @see cn.novisfff.raspberry.views.schedule.UpdateSysInfoSchedule
  */
 @Component
-public class ComputerInfoView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateComputerInfo {
+public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, UpdateComputerInfo {
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
@@ -53,10 +54,9 @@ public class ComputerInfoView implements ApplicationListener<JavafxApplication.S
     /**
      * 初始化页面
      *
-     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
      */
     @Override
-    public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+    public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
 
             try {

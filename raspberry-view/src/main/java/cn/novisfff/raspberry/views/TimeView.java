@@ -1,6 +1,7 @@
 package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
+import cn.novisfff.raspberry.event.StageReadyEvent;
 import eu.hansolo.medusa.Clock;
 import eu.hansolo.medusa.ClockBuilder;
 import javafx.application.Platform;
@@ -24,7 +25,7 @@ import java.util.Locale;
  * @date ：Created in 2020/12/9
  */
 @Component
-public class TimeView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateTime {
+public class TimeView implements ApplicationListener<StageReadyEvent>, UpdateTime {
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
@@ -45,10 +46,9 @@ public class TimeView implements ApplicationListener<JavafxApplication.StageRead
     /**
      * 初始化页面
      *
-     * @see cn.novisfff.raspberry.JavafxApplication.StageReadyEvent
      */
     @Override
-    public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+    public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
             Pane root;
             try {

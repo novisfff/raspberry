@@ -1,5 +1,7 @@
 package cn.novisfff.raspberry;
 
+import cn.novisfff.raspberry.event.StageReadyEvent;
+import cn.novisfff.raspberry.utils.SpringContextUtil;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -51,7 +53,7 @@ public class JavafxApplication extends Application {
     /**
      * 重写启动方法
      * <p>
-     * 在启动时发布{@link cn.novisfff.raspberry.JavafxApplication.StageReadyEvent}事件，
+     * 在启动时发布{@link cn.novisfff.raspberry.event.StageReadyEvent}事件，
      * 表明JavaFx相关视图部分可以进行初始化
      *
      * @param primaryStage
@@ -73,18 +75,5 @@ public class JavafxApplication extends Application {
         Platform.exit();
     }
 
-    /**
-     * StageReady事件类
-     */
-    public static class StageReadyEvent extends ApplicationEvent {
-
-        public Stage getStage() {
-            return Stage.class.cast(getSource());
-        }
-
-        public StageReadyEvent(Object source) {
-            super(source);
-        }
-    }
 
 }

@@ -2,6 +2,7 @@ package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.domain.Weather;
+import cn.novisfff.raspberry.event.StageReadyEvent;
 import cn.novisfff.raspberry.utils.NetworkUtil;
 import cn.novisfff.raspberry.utils.WeatherUtil;
 import javafx.application.Platform;
@@ -30,7 +31,7 @@ import java.util.Map;
  */
 
 @Component
-public class WeatherView implements ApplicationListener<JavafxApplication.StageReadyEvent>, UpdateWeather {
+public class WeatherView implements ApplicationListener<StageReadyEvent>, UpdateWeather {
 
 
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
@@ -84,7 +85,7 @@ public class WeatherView implements ApplicationListener<JavafxApplication.StageR
     private final String ICON_SUFFIX = ".png";
 
     @Override
-    public void onApplicationEvent(JavafxApplication.StageReadyEvent stageReadyEvent) {
+    public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("weather.fxml"));
