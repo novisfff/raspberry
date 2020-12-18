@@ -18,7 +18,9 @@ public class SocketListen implements ServletContextListener {
     private SocketThread socketThread;
     private Logger log = LoggerFactory.getLogger(SocketListen.class);
 
-    //初始化方法
+    /**
+     * 初始化方法
+     */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         log.info("初始化启动Socket服务...");
@@ -28,7 +30,9 @@ public class SocketListen implements ServletContextListener {
         }
     }
 
-    //销毁方法
+    /**
+     * 销毁方法
+     */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         log.info("将Socket服务关闭...");

@@ -1,14 +1,9 @@
 package cn.novisfff.raspberry;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,6 +20,9 @@ public class RaspberryViewMainServer implements ApplicationListener<ApplicationR
         this.context = context;
     }
 
+    /**
+     * Spring启动完成后，启动JavaFx
+     */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         JavafxApplication.applicationContext = context;
