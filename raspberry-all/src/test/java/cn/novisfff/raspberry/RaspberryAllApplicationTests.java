@@ -6,6 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Ignore
-public class RaspberryCoreApplicationTests {
+public class RaspberryAllApplicationTests {
+
+	@Test
+	public void contextLoads() {
+	}
 
 }

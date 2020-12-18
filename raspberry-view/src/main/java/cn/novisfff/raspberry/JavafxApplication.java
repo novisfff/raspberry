@@ -1,18 +1,12 @@
 package cn.novisfff.raspberry;
 
 import cn.novisfff.raspberry.event.StageReadyEvent;
-import cn.novisfff.raspberry.utils.SpringContextUtil;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
-
 import javafx.stage.Stage;
-
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
+
 
 
 /**
@@ -27,27 +21,21 @@ public class JavafxApplication extends Application {
     /**
      * Spring 上下文
      */
-    private ConfigurableApplicationContext context;
+    static ConfigurableApplicationContext applicationContext;
+
 
     /**
      * 重写初始化方法
      * <p>
-     * 在JavaFx启动线程中初始化Spring，并将javaFx相关组件注册到Spring中
+     * 将javaFx相关组件注册到Spring中
      *
      * @author novisfff
      */
     @Override
     public void init() {
-
-        ApplicationContextInitializer<GenericApplicationContext> initializer = ac -> {
-            ac.registerBean(Application.class, () -> this);
-            ac.registerBean(Parameters.class, this::getParameters);
-            ac.registerBean(HostServices.class, this::getHostServices);
-        };
-        this.context = new SpringApplicationBuilder()
-                .sources(RaspberryApplication.class)
-                .initializers(initializer)
-                .run(getParameters().getRaw().toArray(new String[0]));
+        applicationContext.getBeanFactory().registerResolvableDependency(Application.class, this);
+        applicationContext.getBeanFactory().registerResolvableDependency(Parameters.class, this.getParameters());
+        applicationContext.getBeanFactory().registerResolvableDependency(HostServices.class, this.getHostServices());
     }
 
     /**
@@ -60,7 +48,7 @@ public class JavafxApplication extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        this.context.publishEvent(new StageReadyEvent(primaryStage));
+        applicationContext.publishEvent(new StageReadyEvent(primaryStage));
     }
 
     /**
@@ -71,7 +59,8 @@ public class JavafxApplication extends Application {
      */
     @Override
     public void stop() {
-        this.context.close();
+        // TODO 关闭JAVAFX程序自动关闭spring以及其他任务
+        //applicationContext.registerShutdownHook();
         Platform.exit();
     }
 

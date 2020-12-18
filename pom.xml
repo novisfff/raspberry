@@ -16,6 +16,7 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
+        <module>raspberry-all</module>
         <module>raspberry-view</module>
         <module>raspberry-core</module>
     </modules>
