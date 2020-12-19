@@ -54,7 +54,7 @@ public class SocketThread extends Thread {
     @Override
     public void run() {
         logger.info("服务已启动...进入到长连接状态等待请求...");
-        while (true) {
+        while (!serverSocket.isClosed()) {
             try {
                 socket = serverSocket.accept();
                 bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -79,7 +79,7 @@ public class SocketThread extends Thread {
 
                 }
             } catch (IOException e) {
-                logger.error("服务端接收请求异常" + e);
+                logger.info("Socket被关闭");
             } finally {
                 try {
                     if (socket != null) {

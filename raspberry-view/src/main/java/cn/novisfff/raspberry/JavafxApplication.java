@@ -59,8 +59,7 @@ public class JavafxApplication extends Application {
      */
     @Override
     public void stop() {
-        // TODO 关闭JAVAFX程序自动关闭spring以及其他任务
-        //applicationContext.registerShutdownHook();
+        applicationContext.close();
         Platform.exit();
     }
 

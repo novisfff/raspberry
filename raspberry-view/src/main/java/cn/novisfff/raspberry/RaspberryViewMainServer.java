@@ -1,6 +1,8 @@
 package cn.novisfff.raspberry;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @date ：Created in 2020/12/18
  */
 @Service
-public class RaspberryViewMainServer implements ApplicationListener<ApplicationReadyEvent> {
+public class RaspberryViewMainServer implements ApplicationListener<ApplicationReadyEvent>, DisposableBean {
 
     private ConfigurableApplicationContext context;
 
@@ -28,7 +30,11 @@ public class RaspberryViewMainServer implements ApplicationListener<ApplicationR
         JavafxApplication.applicationContext = context;
         new Thread(() -> {
             Application.launch(JavafxApplication.class);
-        }).run();
+        }).start();
     }
 
+    @Override
+    public void destroy() throws Exception {
+        Platform.exit();
+    }
 }
