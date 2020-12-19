@@ -59,7 +59,7 @@ public class SocketThread extends Thread {
                 socket = serverSocket.accept();
                 bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 isConnected = true;
-                while (isConnected) {
+                while (isConnected && !serverSocket.isClosed()) {
                     try {
                         String message = bufferedReader.readLine();
                         logger.debug(message);
