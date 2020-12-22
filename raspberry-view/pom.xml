@@ -43,11 +43,13 @@
             </exclusions>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/eu.hansolo/Medusa -->
         <dependency>
-            <groupId>cn.novisfff</groupId>
-            <artifactId>medusa</artifactId>
-            <version>8.3</version>
+            <groupId>eu.hansolo</groupId>
+            <artifactId>Medusa</artifactId>
+            <version>11.5</version>
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
