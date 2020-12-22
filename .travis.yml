@@ -6,6 +6,9 @@ jdk:
   - openjdk11
 script: "mvn clean package"
 
+before_script:
+  - sudo apt install maven
+
 branches:
   only:
     - main
