@@ -5,26 +5,44 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     if(System.getProperty('os.name').toLowerCase().contains('windows')) {
-        implementation 'org.openjfx:javafx-controls:11.0.2:win'
-        implementation 'org.openjfx:javafx-graphics:11.0.2:win'
-        implementation 'org.openjfx:javafx-base:11.0.2:win'
-        implementation 'org.openjfx:javafx-fxml:11.0.2:win'
-        implementation 'org.openjfx:javafx-web:11.0.2:win'
-        implementation 'org.openjfx:javafx-media:11.0.2:win'
+        compile('org.openjfx:javafx-base:11.0.2:win') {
+            force = true
+        }
+        compile('org.openjfx:javafx-graphics:11.0.2:win') {
+            force = true
+        }
+        compile('org.openjfx:javafx-controls:11.0.2:win') {
+            force = true
+        }
+        compile('org.openjfx:javafx-fxml:11.0.2:win') {
+            force = true
+        }
     } else if(System.getProperty('os.name').toLowerCase().contains('linux')) {
-        implementation 'org.openjfx:javafx-controls:11.0.2:linux'
-        implementation 'org.openjfx:javafx-graphics:11.0.2:linux'
-        implementation 'org.openjfx:javafx-base:11.0.2:linux'
-        implementation 'org.openjfx:javafx-fxml:11.0.2:linux'
-        implementation 'org.openjfx:javafx-web:11.0.2:linux'
-        implementation 'org.openjfx:javafx-media:11.0.2:linux'
+        compile('org.openjfx:javafx-base:11.0.2:linux') {
+            force = true
+        }
+        compile('org.openjfx:javafx-graphics:11.0.2:linux') {
+            force = true
+        }
+        compile('org.openjfx:javafx-controls:11.0.2:linux') {
+            force = true
+        }
+        compile('org.openjfx:javafx-fxml:11.0.2:linux') {
+            force = true
+        }
     } else if(System.getProperty('os.name').toLowerCase().contains('mac')) {
-        implementation 'org.openjfx:javafx-controls:11.0.2:mac'
-        implementation 'org.openjfx:javafx-graphics:11.0.2:mac'
-        implementation 'org.openjfx:javafx-base:11.0.2:mac'
-        implementation 'org.openjfx:javafx-fxml:11.0.2:mac'
-        implementation 'org.openjfx:javafx-web:11.0.2:mac'
-        implementation 'org.openjfx:javafx-media:11.0.2:mac'
+        compile('org.openjfx:javafx-base:11.0.2:mac') {
+            force = true
+        }
+        compile('org.openjfx:javafx-graphics:11.0.2:mac') {
+            force = true
+        }
+        compile('org.openjfx:javafx-controls:11.0.2:mac') {
+            force = true
+        }
+        compile('org.openjfx:javafx-fxml:11.0.2:mac') {
+            force = true
+        }
     }
     implementation project(':raspberry-core')
     implementation 'org.springframework.boot:spring-boot-starter-web'
