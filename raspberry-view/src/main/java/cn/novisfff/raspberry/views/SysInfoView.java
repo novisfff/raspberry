@@ -6,6 +6,9 @@ import cn.novisfff.raspberry.utils.SysInfoUtil;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import eu.hansolo.medusa.Section;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
+import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +55,8 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
     Pane temperaturePane;
 
 
-    public Gauge cpu0LoadGauge, cpu1LoadGauge, cpu2LoadGauge, cpu3LoadGauge, cpuLoadGauge, memoryGauge, temperatureGauge;
+    public Gauge cpu0LoadGauge, cpu1LoadGauge, cpu2LoadGauge, cpu3LoadGauge, memoryGauge, temperatureGauge;
+    public Tile cpuLoadTile;
 
 
     public SysInfoView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
@@ -89,8 +93,14 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
             cpu3LoadGauge = buildCpuCoreGauge();
             cpu3Pane.getChildren().setAll(cpu3LoadGauge);
 
-            cpuLoadGauge = buildCpuLoadGauge();
-            cpuPane.getChildren().setAll(cpuLoadGauge);
+            cpuLoadTile = buildCpuLoadTile();
+            cpuPane.getChildren().setAll(cpuLoadTile);
+
+            for (int i = 0; i < 100; i++) {
+                cpuLoadTile.addChartData(new ChartData("Item 1", 55, Tile.BLUE));
+                cpuLoadTile.addChartData(new ChartData("Item 1", 22, Tile.BLUE));
+            }
+
 
             int totalMemory = 3700;
             if(applicationContext.getEnvironment().getProperty("os.name").contains("Linux")) {
@@ -126,10 +136,25 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
     }
 
     /**
-     * 构建绘制CPU总体使用率的{@link Gauge}
+     * 构建绘制CPU总体使用率的{@link Tile}
      */
-    private Gauge buildCpuLoadGauge() {
-        return GaugeBuilder
+    private Tile buildCpuLoadTile() {
+        ChartData smoothChartData1 = new ChartData("Item 1", 33, Tile.BLUE);
+        ChartData smoothChartData2 = new ChartData("Item 2", 22, Tile.BLUE);
+        ChartData smoothChartData3 = new ChartData("Item 3", 11, Tile.BLUE);
+        ChartData smoothChartData4 = new ChartData("Item 4", 44, Tile.BLUE);
+        return TileBuilder.create().skinType(Tile.SkinType.SMOOTH_AREA_CHART)
+                .prefSize(120, 120)
+                .minValue(0)
+                .maxValue(100)
+                .backgroundColor(new Color(0, 0, 0, 0))
+                //.chartType(ChartType.LINE)
+                //.dataPointsVisible(true)
+                .chartData(smoothChartData1, smoothChartData2, smoothChartData3, smoothChartData4)
+                .tooltipText("")
+                .animated(true)
+                .build();
+        /*return GaugeBuilder
                 .create()
                 .skinType(Gauge.SkinType.TILE_SPARK_LINE)
                 .prefSize(120, 120)
@@ -143,7 +168,7 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
                 .gradientBarStops(new Stop(0.0, Color.LIME),
                         new Stop(0.4, Color.YELLOW),
                         new Stop(0.75, Color.RED))
-                .build();
+                .build();*/
     }
 
     /**
@@ -188,14 +213,14 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
 
     @Override
     public void setCpuLoad(double[] loads) {
-        if(cpuLoadGauge != null) {
+        if(cpuLoadTile != null) {
             Platform.runLater(() -> {
                 if (loads != null) {
                     cpu0LoadGauge.setValue(loads[1] * 100);
                     cpu1LoadGauge.setValue(loads[2] * 100);
                     cpu2LoadGauge.setValue(loads[3] * 100);
                     cpu3LoadGauge.setValue(loads[4] * 100);
-                    cpuLoadGauge.setValue(loads[0] * 100);
+                    cpuLoadTile.setValue(loads[0] * 100);
                 }
             });
         }
