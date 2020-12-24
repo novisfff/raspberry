@@ -4,15 +4,15 @@ arch: arm64
 
 jdk:
   - openjdk11
-script: "mvn clean package"
+script: "./gradlew clean build jar"
 
 before_install:
-  - sudo apt install maven
   - sudo apt install openjfx
+  - chmod 777 ./gradlew
 
 branches:
   only:
-    - main
+    - master
 
 cache:
   directories:
