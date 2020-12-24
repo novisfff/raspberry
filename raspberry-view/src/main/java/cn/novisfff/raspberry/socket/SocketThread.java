@@ -63,14 +63,16 @@ public class SocketThread extends Thread {
                     try {
                         String message = bufferedReader.readLine();
                         logger.debug(message);
-                        String[] msg = message.split("!!");
-                        String msgHeader = msg[0];
-                        switch (msgHeader) {
-                            case "PC_DATA":
-                                SpringContextUtil.getApplicationContext().publishEvent(new PcDataMessageReadyEvent(msg[1]));
-                                break;
-                            default:
-                                break;
+                        if(message != null) {
+                            String[] msg = message.split("!!");
+                            String msgHeader = msg[0];
+                            switch (msgHeader) {
+                                case "PC_DATA":
+                                    SpringContextUtil.getApplicationContext().publishEvent(new PcDataMessageReadyEvent(msg[1]));
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     } catch (Exception e) {
                         isConnected = false;

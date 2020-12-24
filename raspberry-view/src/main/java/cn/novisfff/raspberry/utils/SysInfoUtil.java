@@ -66,7 +66,7 @@ public class SysInfoUtil {
 
         try {
             Mem mem = sigar.getMem();
-            return new Long(mem.getActualUsed() / (1024L * 1024L)).intValue();
+            return Long.valueOf(mem.getActualUsed() / (1024L * 1024L)).intValue();
         } catch (SigarException e) {
             e.printStackTrace();
             return 0;
@@ -81,7 +81,7 @@ public class SysInfoUtil {
 
         try {
             Mem mem = sigar.getMem();
-            return new Long(mem.getTotal() / (1024L * 1024L)).intValue();
+            return Long.valueOf(mem.getTotal() / (1024L * 1024L)).intValue();
         } catch (SigarException e) {
             e.printStackTrace();
             return 0;
@@ -110,17 +110,23 @@ public class SysInfoUtil {
             return 0;
         } finally {
             try {
-                is.close();
+                if(is != null) {
+                    is.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                isr.close();
+                if(isr != null) {
+                    isr.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                br.close();
+                if(br != null) {
+                    br.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

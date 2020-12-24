@@ -96,7 +96,7 @@ public class HomeView implements ApplicationListener<StageReadyEvent> {
 
         try {
             Stage stage = stageReadyEvent.getStage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(rootFxml));
+            FXMLLoader fxmlLoader = new FXMLLoader(HomeView.class.getResource(rootFxml));
             fxmlLoader.setControllerFactory(applicationContext::getBean);
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, width, height);

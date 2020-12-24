@@ -88,7 +88,7 @@ public class WeatherView implements ApplicationListener<StageReadyEvent>, Update
     public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("weather.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(WeatherView.class.getResource("weather.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 weatherPane = fxmlLoader.load();
             } catch (IOException exception) {

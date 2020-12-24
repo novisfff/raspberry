@@ -69,7 +69,7 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
         Platform.runLater(() -> {
             Pane root;
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sysInfo.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(SysInfoView.class.getResource("sysInfo.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 root = fxmlLoader.load();
                 homeView.rightPane1.getChildren().add(root);
