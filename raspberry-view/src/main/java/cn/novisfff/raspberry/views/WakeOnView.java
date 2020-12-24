@@ -64,7 +64,7 @@ public class WakeOnView implements ApplicationListener<StageReadyEvent>, UpdateW
 
         Platform.runLater(() -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("wakeon.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(WakeOnView.class.getResource("wakeon.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 wakeOnPane = fxmlLoader.load();
             } catch (IOException exception) {

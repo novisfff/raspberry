@@ -60,7 +60,7 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
         Platform.runLater(() -> {
 
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("computerInfo.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(ComputerInfoView.class.getResource("computerInfo.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 computerInfoPane = fxmlLoader.load();
             } catch (IOException exception) {

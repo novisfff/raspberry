@@ -52,7 +52,7 @@ public class TimeView implements ApplicationListener<StageReadyEvent>, UpdateTim
         Platform.runLater(() -> {
             Pane root;
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("time.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(TimeView.class.getResource("time.fxml"));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 root = fxmlLoader.load();
                 homeView.timePane.getChildren().add(root);

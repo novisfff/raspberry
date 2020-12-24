@@ -1,4 +1,5 @@
 .mvn/
+.gradle/
 target/
 /workspace.xml
 HELP.md
