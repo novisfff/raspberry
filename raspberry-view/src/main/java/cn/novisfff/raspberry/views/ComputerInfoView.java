@@ -74,13 +74,20 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
             } catch (IOException exception) {
                 throw new RuntimeException(exception);
             }
-
+            cpuDataList = new LinkedList<>();
+            for (int i = 0; i < DATA_LENGTH; i++) {
+                cpuDataList.add(new ChartData("data", 0, Tile.GREEN));
+            }
             cpuUsedTile = buildCpuGpuTile(cpuDataList);
             cpuUsedPane.getChildren().setAll(cpuUsedTile);
 
             cpuTempGauge = buildTempGauge();
             cpuTempPane.getChildren().setAll(cpuTempGauge);
 
+            gpuDataList = new LinkedList<>();
+            for (int i = 0; i < DATA_LENGTH; i++) {
+                gpuDataList.add(new ChartData("data", 0, Tile.GREEN));
+            }
             gpuUsedTile = buildCpuGpuTile(gpuDataList);
             gpuUsedPane.getChildren().setAll(gpuUsedTile);
 
@@ -100,10 +107,6 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
      * 构建绘制CPU和GPU使用率的{@link Tile}
      */
     private Tile buildCpuGpuTile(LinkedList<ChartData> dataList) {
-        dataList = new LinkedList<>();
-        for (int i = 0; i < DATA_LENGTH; i++) {
-            dataList.add(new ChartData("data", 0, Tile.GREEN));
-        }
         return TileBuilder.create().skinType(Tile.SkinType.SMOOTH_AREA_CHART)
                 .prefSize(150, 150)
                 .minValue(0)
