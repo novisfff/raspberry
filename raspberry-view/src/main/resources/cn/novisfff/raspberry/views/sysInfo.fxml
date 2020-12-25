@@ -50,7 +50,7 @@
                        </Pane>
                    </children>
                </GridPane>
-               <Label alignment="TOP_LEFT" text="cpu" textFill="#000002" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
+               <Label alignment="TOP_LEFT" text="cpu" textFill="#000002" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
 
             </Label>
                <Label text="mp" textFill="#000002" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="80.0">
