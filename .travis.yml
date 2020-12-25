@@ -10,7 +10,7 @@ jdk:
 script: "./gradlew clean build jar"
 
 before_install:
-  - apt install openjfx
+  - sudo apt install openjfx
   - chmod 777 ./gradlew
 
 branches:
