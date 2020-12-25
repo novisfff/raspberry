@@ -2,12 +2,15 @@ language: java
 sudo: true
 arch: arm64
 
+os:
+  - linux
+
 jdk:
   - openjdk11
 script: "./gradlew clean build jar"
 
 before_install:
-  - sudo apt install openjfx
+  - apt install openjfx
   - chmod 777 ./gradlew
 
 branches:
@@ -16,7 +19,7 @@ branches:
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
 
 notifications:
   email:
