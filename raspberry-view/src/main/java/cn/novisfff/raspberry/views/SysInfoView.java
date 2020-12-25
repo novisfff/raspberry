@@ -23,6 +23,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <h1>树莓派系统信息页面</h1>
@@ -31,8 +33,9 @@ import java.io.IOException;
  * @date ：Created in 2020/12/10
  */
 @Component
-public class SysInfoView implements ApplicationListener<StageReadyEvent>, UpdateSystemInfo{
+public class SysInfoView implements ApplicationListener<StageReadyEvent>, UpdateSystemInfo {
 
+    private final static int DATA_LENGTH = 20;
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     private ConfigurableApplicationContext applicationContext;
@@ -57,6 +60,7 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
 
     public Gauge cpu0LoadGauge, cpu1LoadGauge, cpu2LoadGauge, cpu3LoadGauge, memoryGauge, temperatureGauge;
     public Tile cpuLoadTile;
+    private LinkedList<ChartData> dataList;
 
 
     public SysInfoView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
@@ -66,7 +70,6 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
 
     /**
      * 初始化页面
-     *
      */
     @Override
     public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
@@ -96,14 +99,8 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
             cpuLoadTile = buildCpuLoadTile();
             cpuPane.getChildren().setAll(cpuLoadTile);
 
-            for (int i = 0; i < 100; i++) {
-                cpuLoadTile.addChartData(new ChartData("Item 1", 55, Tile.BLUE));
-                cpuLoadTile.addChartData(new ChartData("Item 1", 22, Tile.BLUE));
-            }
-
-
             int totalMemory = 3700;
-            if(applicationContext.getEnvironment().getProperty("os.name").contains("Linux")) {
+            if (applicationContext.getEnvironment().getProperty("os.name").contains("Linux")) {
                 totalMemory = SysInfoUtil.getTotalMemory();
             }
             memoryGauge = buildMemoryGauge(totalMemory);
@@ -127,7 +124,7 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
                 .skinType(Gauge.SkinType.FLAT)
                 .prefSize(50, 50)
                 .maxValue(100)
-                .valueColor(new Color(0,0,0.05,0.9))
+                .valueColor(new Color(0, 0, 0.05, 0.9))
                 .gradientBarEnabled(true)
                 .gradientBarStops(new Stop(0.0, Color.LIME),
                         new Stop(0.4, Color.YELLOW),
@@ -139,36 +136,22 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
      * 构建绘制CPU总体使用率的{@link Tile}
      */
     private Tile buildCpuLoadTile() {
-        ChartData smoothChartData1 = new ChartData("Item 1", 33, Tile.BLUE);
-        ChartData smoothChartData2 = new ChartData("Item 2", 22, Tile.BLUE);
-        ChartData smoothChartData3 = new ChartData("Item 3", 11, Tile.BLUE);
-        ChartData smoothChartData4 = new ChartData("Item 4", 44, Tile.BLUE);
+        dataList = new LinkedList<>();
+        for (int i = 0; i < DATA_LENGTH; i++) {
+            dataList.add(new ChartData("data", 0, Tile.GREEN));
+        }
         return TileBuilder.create().skinType(Tile.SkinType.SMOOTH_AREA_CHART)
                 .prefSize(120, 120)
                 .minValue(0)
                 .maxValue(100)
                 .backgroundColor(new Color(0, 0, 0, 0))
-                //.chartType(ChartType.LINE)
-                //.dataPointsVisible(true)
-                .chartData(smoothChartData1, smoothChartData2, smoothChartData3, smoothChartData4)
+                .valueColor(new Color(0,0,0.05,0.9))
+                .smoothing(true)
+                .chartType(Tile.ChartType.AREA)
+                .chartData(dataList)
                 .tooltipText("")
                 .animated(true)
                 .build();
-        /*return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.TILE_SPARK_LINE)
-                .prefSize(120, 120)
-                .minValue(0)
-                .maxValue(100)
-                .averagingPeriod(20)
-                .valueColor(new Color(0,0,0.05,0.9))
-                .gradientBarEnabled(true)
-                .smoothing(true)
-                .backgroundPaint(new Color(0, 0, 0, 0))
-                .gradientBarStops(new Stop(0.0, Color.LIME),
-                        new Stop(0.4, Color.YELLOW),
-                        new Stop(0.75, Color.RED))
-                .build();*/
     }
 
     /**
@@ -181,10 +164,10 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
                 .prefSize(120, 120)
                 .maxValue(totalMemory)
                 .decimals(0)
-                .valueColor(new Color(0,0,0.05,0.9))
+                .valueColor(new Color(0, 0, 0.05, 0.9))
                 .majorTickMarkColor(Color.CYAN)
-                .tickLabelColor(new Color(0,0,0.05,0))
-                .barColor(new Color(0.7,0.7,0.15,1))
+                .tickLabelColor(new Color(0, 0, 0.05, 0))
+                .barColor(new Color(0.7, 0.7, 0.15, 1))
                 .sectionsVisible(true)
                 .sections(new Section(0, totalMemory * 0.5, Color.LIME),
                         new Section(totalMemory * 0.5, totalMemory * 0.75, Color.ORANGE),
@@ -201,7 +184,7 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
                 .skinType(Gauge.SkinType.KPI)
                 .prefSize(100, 100)
                 .maxValue(100)
-                .valueColor(new Color(0,0,0.05,0.9))
+                .valueColor(new Color(0, 0, 0.05, 0.9))
                 .barColor(Color.LIME)
                 .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)
@@ -213,14 +196,18 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
 
     @Override
     public void setCpuLoad(double[] loads) {
-        if(cpuLoadTile != null) {
+        if (cpuLoadTile != null) {
             Platform.runLater(() -> {
                 if (loads != null) {
                     cpu0LoadGauge.setValue(loads[1] * 100);
                     cpu1LoadGauge.setValue(loads[2] * 100);
                     cpu2LoadGauge.setValue(loads[3] * 100);
                     cpu3LoadGauge.setValue(loads[4] * 100);
-                    cpuLoadTile.setValue(loads[0] * 100);
+                    ChartData firstData = dataList.removeFirst();
+                    firstData.setValue(loads[0] * 100);
+                    dataList.addLast(firstData);
+                    cpuLoadTile.removeChartData(firstData);
+                    cpuLoadTile.addChartData(firstData);
                 }
             });
         }
@@ -228,14 +215,14 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
 
     @Override
     public void setMemoryUsed(double used) {
-        if(memoryGauge != null) {
+        if (memoryGauge != null) {
             Platform.runLater(() -> memoryGauge.setValue(used));
         }
     }
 
     @Override
     public void setTemperature(double temperature) {
-        if(temperatureGauge != null) {
+        if (temperatureGauge != null) {
             Platform.runLater(() -> temperatureGauge.setValue(temperature));
         }
     }
