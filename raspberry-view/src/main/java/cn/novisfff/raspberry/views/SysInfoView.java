@@ -36,11 +36,14 @@ import java.util.List;
 public class SysInfoView implements ApplicationListener<StageReadyEvent>, UpdateSystemInfo {
 
     private final static int DATA_LENGTH = 20;
+
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     private ConfigurableApplicationContext applicationContext;
 
     private HomeView homeView;
+
+    private LinkedList<ChartData> dataList;
 
     @FXML
     Pane cpuPane;
@@ -57,10 +60,8 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
     @FXML
     Pane temperaturePane;
 
-
     public Gauge cpu0LoadGauge, cpu1LoadGauge, cpu2LoadGauge, cpu3LoadGauge, memoryGauge, temperatureGauge;
     public Tile cpuLoadTile;
-    private LinkedList<ChartData> dataList;
 
 
     public SysInfoView(ConfigurableApplicationContext applicationContext, HomeView homeView) {

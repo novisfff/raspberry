@@ -5,6 +5,9 @@ import cn.novisfff.raspberry.event.StageReadyEvent;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import eu.hansolo.medusa.Section;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
+import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * <h1>电脑信息JavaFx页面</h1>
@@ -28,9 +32,13 @@ import java.io.IOException;
 @Component
 public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, UpdateComputerInfo {
 
+    private final static int DATA_LENGTH = 20;
+
     private final static Logger logger = LoggerFactory.getLogger(WakeOnView.class);
 
     private ConfigurableApplicationContext applicationContext;
+
+    private LinkedList<ChartData> cpuDataList, gpuDataList;
 
     Pane computerInfoPane;
 
@@ -49,11 +57,11 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
     @FXML
     private Pane memoryPane;
 
-    private Gauge cpuUsedGauge, cpuTempGauge, gpuUsedGauge, gpuTempGauge, memoryGauge;
+    private Gauge cpuTempGauge, gpuTempGauge, memoryGauge;
+    private Tile cpuUsedTile, gpuUsedTile;
 
     /**
      * 初始化页面
-     *
      */
     @Override
     public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
@@ -67,14 +75,14 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
                 throw new RuntimeException(exception);
             }
 
-            cpuUsedGauge = buildCpuGpuGauge();
-            cpuUsedPane.getChildren().setAll(cpuUsedGauge);
+            cpuUsedTile = buildCpuGpuTile(cpuDataList);
+            cpuUsedPane.getChildren().setAll(cpuUsedTile);
 
             cpuTempGauge = buildTempGauge();
             cpuTempPane.getChildren().setAll(cpuTempGauge);
 
-            gpuUsedGauge = buildCpuGpuGauge();
-            gpuUsedPane.getChildren().setAll(gpuUsedGauge);
+            gpuUsedTile = buildCpuGpuTile(gpuDataList);
+            gpuUsedPane.getChildren().setAll(gpuUsedTile);
 
             gpuTempGauge = buildTempGauge();
             gpuTempPane.getChildren().setAll(gpuTempGauge);
@@ -89,19 +97,24 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
     }
 
     /**
-     * 构建绘制CPU和GPU使用率的{@link Gauge}
+     * 构建绘制CPU和GPU使用率的{@link Tile}
      */
-    private Gauge buildCpuGpuGauge() {
-        return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.TILE_SPARK_LINE)
+    private Tile buildCpuGpuTile(LinkedList<ChartData> dataList) {
+        dataList = new LinkedList<>();
+        for (int i = 0; i < DATA_LENGTH; i++) {
+            dataList.add(new ChartData("data", 0, Tile.GREEN));
+        }
+        return TileBuilder.create().skinType(Tile.SkinType.SMOOTH_AREA_CHART)
                 .prefSize(150, 150)
                 .minValue(0)
                 .maxValue(100)
-                .averagingPeriod(20)
+                .backgroundColor(new Color(0, 0, 0, 0))
                 .valueColor(new Color(0,0,0.05,0.9))
                 .smoothing(true)
-                .backgroundPaint(new Color(0, 0, 0, 0))
+                .chartType(Tile.ChartType.AREA)
+                .chartData(dataList)
+                .tooltipText("")
+                .animated(true)
                 .build();
     }
 
@@ -114,7 +127,7 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
                 .skinType(Gauge.SkinType.KPI)
                 .prefSize(150, 150)
                 .maxValue(100)
-                .valueColor(new Color(0,0,0.05,0.9))
+                .valueColor(new Color(0, 0, 0.05, 0.9))
                 .barColor(Color.LIME)
                 .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)
@@ -140,7 +153,7 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
                 .barBackgroundColor(Color.WHITE)
                 .barBorderColor(Color.WHITE)
                 .tickLabelColor(Color.WHITE)
-                .valueColor(new Color(0,0,0.05,0.9))
+                .valueColor(new Color(0, 0, 0.05, 0.9))
                 .barColor(new Color(0.1, 0.7, 1, 1))
                 .sectionsVisible(true)
                 .sections(new Section(0, totalMemory * 0.5, new Color(0.1, 1, 0.1, 0.3)),
@@ -152,35 +165,47 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
 
     @Override
     public void setCpuUsed(double load) {
-        if(cpuUsedGauge != null) {
-            Platform.runLater(() -> cpuUsedGauge.setValue(load * 100));
+        if (cpuUsedTile != null) {
+            Platform.runLater(() -> {
+                ChartData firstData = cpuDataList.removeFirst();
+                firstData.setValue(load * 100);
+                cpuDataList.addLast(firstData);
+                cpuUsedTile.removeChartData(firstData);
+                cpuUsedTile.addChartData(firstData);
+            });
         }
     }
 
     @Override
     public void setGpuUsed(double load) {
-        if(gpuUsedGauge != null) {
-            Platform.runLater(() -> gpuUsedGauge.setValue(load * 100));
+        if (gpuUsedTile != null) {
+            Platform.runLater(() -> {
+                ChartData firstData = gpuDataList.removeFirst();
+                firstData.setValue(load * 100);
+                gpuDataList.addLast(firstData);
+                gpuUsedTile.removeChartData(firstData);
+                gpuUsedTile.addChartData(firstData);
+            });
         }
     }
 
     @Override
     public void setCpuTemperature(double temperature) {
-        if(cpuTempGauge != null) {
+        if (cpuTempGauge != null) {
             Platform.runLater(() -> cpuTempGauge.setValue(temperature));
         }
     }
 
     @Override
     public void setGpuTemperature(double temperature) {
-        if(gpuTempGauge != null) {
+        if (gpuTempGauge != null) {
             Platform.runLater(() -> gpuTempGauge.setValue(temperature));
         }
     }
 
     @Override
     public void setMemoryUsed(double used) {
-        if(memoryGauge != null) {
+        if (memoryGauge != null) {
             Platform.runLater(() -> memoryGauge.setValue(used));
         }
     }
