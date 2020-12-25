@@ -15,7 +15,7 @@ before_install:
 
 branches:
   only:
-    - master
+    - dev
 
 cache:
   directories:
