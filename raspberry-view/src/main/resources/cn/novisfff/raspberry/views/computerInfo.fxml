@@ -9,7 +9,11 @@
 
 <Pane style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.novisfff.raspberry.views.ComputerInfoView">
    <children>
-   
+       <ImageView fitHeight="360" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@/pic/left.png" />
+           </image>
+       </ImageView>
        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="300.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
            <children>
                <Label text="cpu" textFill="#000002" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">

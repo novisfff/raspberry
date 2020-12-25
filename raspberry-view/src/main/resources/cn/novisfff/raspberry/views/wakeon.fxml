@@ -6,6 +6,11 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="360.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.novisfff.raspberry.views.WakeOnView">
+    <ImageView fitHeight="360" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@/pic/left.png" />
+        </image>
+    </ImageView>
     <children>
         <ImageView fx:id="buttonImage" fitHeight="160.0" fitWidth="160.0" layoutX="70.0" layoutY="100.0">
             <image>
