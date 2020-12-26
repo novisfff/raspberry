@@ -1,14 +1,13 @@
 package cn.novisfff.raspberry.views;
 
-import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.event.StageReadyEvent;
+import cn.novisfff.raspberry.views.skin.TimeSkin;
 import eu.hansolo.medusa.Clock;
-import eu.hansolo.medusa.ClockBuilder;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -16,7 +15,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Locale;
 
 /**
  * <h1>显示时间页面</h1>
@@ -31,15 +29,21 @@ public class TimeView implements ApplicationListener<StageReadyEvent>, UpdateTim
 
     private ConfigurableApplicationContext applicationContext;
 
+    private TimeSkin timeSkin;
+
     private HomeView homeView;
 
-    public TimeView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
+    public TimeView(ConfigurableApplicationContext applicationContext, HomeView homeView, TimeSkin timeSkin) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
+        this.timeSkin = timeSkin;
     }
 
     @FXML
     public Pane timePane;
+
+    @FXML
+    private ImageView backgroundImage;
 
     public Clock timeClock;
 
@@ -52,7 +56,7 @@ public class TimeView implements ApplicationListener<StageReadyEvent>, UpdateTim
         Platform.runLater(() -> {
             Pane root;
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(TimeView.class.getResource("time.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(timeSkin.getTimeFxml(TimeView.class));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 root = fxmlLoader.load();
                 homeView.timePane.getChildren().add(root);
@@ -60,28 +64,18 @@ public class TimeView implements ApplicationListener<StageReadyEvent>, UpdateTim
                 throw new RuntimeException(exception);
             }
 
-            timeClock = buildTimeClock();
+            timeClock = timeSkin.buildTimeClock();
             timePane.getChildren().setAll(timeClock);
 
+            if(timeSkin.getBackground() != null) {
+                backgroundImage.setImage(timeSkin.getBackground());
+            }
             homeView.timePane.getChildren().setAll(root);
 
             logger.info("加载 TimeView");
         });
     }
 
-    /**
-     * 构建显示时间的{@link Clock}
-     */
-    private Clock buildTimeClock() {
-        return ClockBuilder
-                .create()
-                .prefSize(300, 115)
-                .skinType(Clock.ClockSkinType.DIGITAL)
-                .locale(Locale.CHINA).textColor(Color.WHITE)
-                .textColor(new Color(0,0,0.05,0.9))
-                .dateColor(new Color(0,0,0.05,0.9))
-                .build();
-    }
 
     @Override
     public void setTime(long seconds) {

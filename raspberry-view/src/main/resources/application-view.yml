@@ -2,19 +2,21 @@
 # javafx 配置
 javafx:
   ui:
+    skin: CYBER
     title: spring
     width: 800
     height: 480
-    rootFxml: home.fxml
 
 # 监控电脑网络工具配置
-networkUtil:
+computer:
   # 电脑IP地址
   ip: 192.168.1.5
   # 网段广播地址
   broadcast: 192.168.1.255
   # 电脑MAC地址
   mac: 80:FA:5B:38:88:A4
+  # 电脑内存GB
+  memory: 16
 
 # 和风天气配置
 heweather:

@@ -2,11 +2,13 @@ package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.event.StageReadyEvent;
+import cn.novisfff.raspberry.views.skin.HomeSkin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -49,6 +51,9 @@ public class HomeView implements ApplicationListener<StageReadyEvent> {
 
     @FXML
     Pane timePane;
+    
+    @FXML
+    private ImageView backgroundImage;
 
     /**
      * 窗口标题，通过javafx.ui.title属性配置
@@ -65,26 +70,24 @@ public class HomeView implements ApplicationListener<StageReadyEvent> {
      */
     private final int height;
 
-    /**
-     * 主页Fxml文件，通过javafx.ui.rootFxml属性配置
-     */
-    private final String rootFxml;
 
     /**
      * Spring上下文
      */
     private final ApplicationContext applicationContext;
 
+    private HomeSkin homeSkin;
+
     public HomeView(@Value("${javafx.ui.title}") String applicationTitle,
                     @Value("${javafx.ui.width}") int width,
                     @Value("${javafx.ui.height}") int height,
-                    @Value("${javafx.ui.rootFxml}") String rootFxml,
-                    ApplicationContext applicationContext) {
+                    ApplicationContext applicationContext,
+                    HomeSkin homeSkin) {
         this.applicationTitle = applicationTitle;
         this.width = width;
         this.height = height;
-        this.rootFxml = rootFxml;
         this.applicationContext = applicationContext;
+        this.homeSkin = homeSkin;
     }
 
     /**
@@ -96,18 +99,27 @@ public class HomeView implements ApplicationListener<StageReadyEvent> {
 
         try {
             Stage stage = stageReadyEvent.getStage();
-            FXMLLoader fxmlLoader = new FXMLLoader(HomeView.class.getResource(rootFxml));
+            FXMLLoader fxmlLoader = new FXMLLoader(homeSkin.getHomeFxml(HomeView.class));
             fxmlLoader.setControllerFactory(applicationContext::getBean);
             Parent root = fxmlLoader.load();
+
             Scene scene = new Scene(root, width, height);
+            // 隐藏鼠标
             scene.setCursor(Cursor.NONE);
-            Font.loadFont(getClass().getResource("cyber.ttf").toExternalForm(), 20);
-            Font.loadFont(getClass().getResource("SourceHanSansCNBold.otf").toExternalForm(), 14);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            // 加载字体
+            homeSkin.getFontsUrl(HomeView.class).forEach((fontUrl) -> Font.loadFont(fontUrl, 20));
+            // 加载CSS文件
+            homeSkin.getStylesheetsUrl(HomeView.class).forEach((styleUrl) -> scene.getStylesheets().add(styleUrl));
+
+            if(homeSkin.getBackground() != null) {
+                backgroundImage.setImage(homeSkin.getBackground());
+            }
+
             stage.setScene(scene);
             stage.setFullScreen(true);
             stage.setTitle(this.applicationTitle);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

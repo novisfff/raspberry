@@ -2,6 +2,7 @@ package cn.novisfff.raspberry.views;
 
 import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.event.StageReadyEvent;
+import cn.novisfff.raspberry.views.skin.ComputerInfoSkin;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import eu.hansolo.medusa.Section;
@@ -11,10 +12,12 @@ import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -38,12 +41,19 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
 
     private ConfigurableApplicationContext applicationContext;
 
+    private ComputerInfoSkin computerInfoSkin;
+
     private LinkedList<ChartData> cpuDataList, gpuDataList;
+
+    private int totalMemory = 8;
 
     Pane computerInfoPane;
 
-    public ComputerInfoView(ConfigurableApplicationContext applicationContext) {
+    public ComputerInfoView(ConfigurableApplicationContext applicationContext, ComputerInfoSkin computerInfoSkin,
+                            @Value("${computer.memory}")int totalMemory) {
         this.applicationContext = applicationContext;
+        this.computerInfoSkin = computerInfoSkin;
+        this.totalMemory = totalMemory;
     }
 
     @FXML
@@ -56,6 +66,8 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
     private Pane gpuTempPane;
     @FXML
     private Pane memoryPane;
+    @FXML
+    private ImageView backgroundImage;
 
     private Gauge cpuTempGauge, gpuTempGauge, memoryGauge;
     private Tile cpuUsedTile, gpuUsedTile;
@@ -68,7 +80,7 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
         Platform.runLater(() -> {
 
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(ComputerInfoView.class.getResource("computerInfo.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(computerInfoSkin.getComputerInfoFxml(ComputerInfoView.class));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 computerInfoPane = fxmlLoader.load();
             } catch (IOException exception) {
@@ -78,93 +90,36 @@ public class ComputerInfoView implements ApplicationListener<StageReadyEvent>, U
             for (int i = 0; i < DATA_LENGTH; i++) {
                 cpuDataList.add(new ChartData("data", 0, Tile.GREEN));
             }
-            cpuUsedTile = buildCpuGpuTile(cpuDataList);
+            cpuUsedTile = computerInfoSkin.buildCpuGpuTile();
+            cpuUsedTile.setChartData(cpuDataList);
             cpuUsedPane.getChildren().setAll(cpuUsedTile);
 
-            cpuTempGauge = buildTempGauge();
+            cpuTempGauge = computerInfoSkin.buildTempGauge();
             cpuTempPane.getChildren().setAll(cpuTempGauge);
 
             gpuDataList = new LinkedList<>();
             for (int i = 0; i < DATA_LENGTH; i++) {
                 gpuDataList.add(new ChartData("data", 0, Tile.GREEN));
             }
-            gpuUsedTile = buildCpuGpuTile(gpuDataList);
+            gpuUsedTile = computerInfoSkin.buildCpuGpuTile();
+            gpuUsedTile.setChartData(gpuDataList);
             gpuUsedPane.getChildren().setAll(gpuUsedTile);
 
-            gpuTempGauge = buildTempGauge();
+            gpuTempGauge = computerInfoSkin.buildTempGauge();
             gpuTempPane.getChildren().setAll(gpuTempGauge);
 
-            //TODO 动态获取内存总量
-            memoryGauge = buildMemoryGauge(16);
+            memoryGauge = computerInfoSkin.buildComputerMemoryGauge(totalMemory);
             memoryPane.getChildren().setAll(memoryGauge);
+
+            if(computerInfoSkin.getBackground() != null) {
+                backgroundImage.setImage(computerInfoSkin.getBackground());
+            }
 
             logger.info("加载 ComputerInfoView");
 
         });
     }
 
-    /**
-     * 构建绘制CPU和GPU使用率的{@link Tile}
-     */
-    private Tile buildCpuGpuTile(LinkedList<ChartData> dataList) {
-        return TileBuilder.create().skinType(Tile.SkinType.SMOOTH_AREA_CHART)
-                .prefSize(150, 150)
-                .minValue(0)
-                .maxValue(100)
-                .backgroundColor(new Color(0, 0, 0, 0))
-                .valueColor(new Color(0,0,0.05,0.9))
-                .smoothing(true)
-                .chartType(Tile.ChartType.AREA)
-                .chartData(dataList)
-                .tooltipText("")
-                .animated(true)
-                .build();
-    }
-
-    /**
-     * 构建绘制CPU和GPU温度的{@link Gauge}
-     */
-    private Gauge buildTempGauge() {
-        return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.KPI)
-                .prefSize(150, 150)
-                .maxValue(100)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
-                .barColor(Color.LIME)
-                .needleColor(new Color(0, 0.73, 0.72, 1))
-                .thresholdVisible(true)
-                .threshold(70)
-                .thresholdColor(Color.RED)
-                .checkThreshold(true)
-                .build();
-    }
-
-    /**
-     * 构建绘制内存使用率的{@link Gauge}
-     *
-     * @param totalMemory 总内存量，单位GB
-     */
-    private Gauge buildMemoryGauge(double totalMemory) {
-        return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.BULLET_CHART)
-                .prefSize(340, 60)
-                .maxValue(totalMemory)
-                .decimals(1)
-                .barColor(Color.WHITE)
-                .barBackgroundColor(Color.WHITE)
-                .barBorderColor(Color.WHITE)
-                .tickLabelColor(Color.WHITE)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
-                .barColor(new Color(0.1, 0.7, 1, 1))
-                .sectionsVisible(true)
-                .sections(new Section(0, totalMemory * 0.5, new Color(0.1, 1, 0.1, 0.3)),
-                        new Section(totalMemory * 0.5, totalMemory * 0.75, new Color(1, 1, 0.3, 0.3)),
-                        new Section(totalMemory * 0.75, totalMemory, new Color(1, 0.1, 0.1, 0.3)))
-                .majorTickSpace(1)
-                .build();
-    }
 
     @Override
     public void setCpuUsed(double load) {

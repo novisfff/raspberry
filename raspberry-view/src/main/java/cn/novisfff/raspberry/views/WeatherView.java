@@ -5,6 +5,7 @@ import cn.novisfff.raspberry.domain.Weather;
 import cn.novisfff.raspberry.event.StageReadyEvent;
 import cn.novisfff.raspberry.utils.NetworkUtil;
 import cn.novisfff.raspberry.utils.WeatherUtil;
+import cn.novisfff.raspberry.views.skin.WeatherSkin;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,13 +39,16 @@ public class WeatherView implements ApplicationListener<StageReadyEvent>, Update
 
     private ConfigurableApplicationContext applicationContext;
 
+    private WeatherSkin weatherSkin;
+
     private HomeView homeView;
 
     private Pane weatherPane;
 
-    public WeatherView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
+    public WeatherView(ConfigurableApplicationContext applicationContext, HomeView homeView, WeatherSkin weatherSkin) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
+        this.weatherSkin = weatherSkin;
     }
 
     @FXML
@@ -80,19 +84,28 @@ public class WeatherView implements ApplicationListener<StageReadyEvent>, Update
     @FXML
     private Label day1Temp;
 
-    private final String ICON_PATH = "/pic/bw-64/";
+    @FXML
+    private ImageView backgroundImage;
 
-    private final String ICON_SUFFIX = ".png";
+    private String iconPath;
+
+    private final static String ICON_SUFFIX = ".png";
 
     @Override
     public void onApplicationEvent(StageReadyEvent stageReadyEvent) {
         Platform.runLater(() -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(WeatherView.class.getResource("weather.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(weatherSkin.getWeatherFxml(WeatherView.class));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 weatherPane = fxmlLoader.load();
             } catch (IOException exception) {
                 throw new RuntimeException(exception);
+            }
+
+            iconPath = weatherSkin.getWeatherIconUrl();
+
+            if(weatherSkin.getBackground() != null) {
+                backgroundImage.setImage(weatherSkin.getBackground());
             }
 
             homeView.rightPane0.getChildren().setAll(weatherPane);
@@ -145,7 +158,7 @@ public class WeatherView implements ApplicationListener<StageReadyEvent>, Update
         if (imageCache.containsKey(iconIndex)) {
             return imageCache.get(iconIndex);
         } else {
-            Image image = new Image(ICON_PATH + iconIndex + ICON_SUFFIX);
+            Image image = new Image(iconPath + iconIndex + ICON_SUFFIX);
             imageCache.put(iconIndex, image);
             return image;
         }

@@ -1,8 +1,8 @@
 package cn.novisfff.raspberry.views;
 
-import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.event.StageReadyEvent;
 import cn.novisfff.raspberry.utils.NetworkUtil;
+import cn.novisfff.raspberry.views.skin.WakeOnSkin;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -36,12 +36,15 @@ public class WakeOnView implements ApplicationListener<StageReadyEvent>, UpdateW
 
     private ComputerInfoView computerInfoView;
 
+    private WakeOnSkin wakeOnSkin;
+
 
     public WakeOnView(ConfigurableApplicationContext applicationContext, HomeView homeView,
-                      ComputerInfoView computerInfoView) {
+                      ComputerInfoView computerInfoView, WakeOnSkin wakeOnSkin) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
         this.computerInfoView = computerInfoView;
+        this.wakeOnSkin = wakeOnSkin;
     }
 
     Pane wakeOnPane;
@@ -51,6 +54,9 @@ public class WakeOnView implements ApplicationListener<StageReadyEvent>, UpdateW
 
     @FXML
     public ImageView buttonImage;
+
+    @FXML
+    private ImageView backgroundImage;
 
     public boolean isInfoPane = false;
 
@@ -64,7 +70,7 @@ public class WakeOnView implements ApplicationListener<StageReadyEvent>, UpdateW
 
         Platform.runLater(() -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(WakeOnView.class.getResource("wakeon.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(wakeOnSkin.getWakeOnFxml(WakeOnView.class));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 wakeOnPane = fxmlLoader.load();
             } catch (IOException exception) {
@@ -77,6 +83,12 @@ public class WakeOnView implements ApplicationListener<StageReadyEvent>, UpdateW
                 NetworkUtil.wakeOnLan();
                 rotateTransition.play();
             });
+
+            buttonImage.setImage(wakeOnSkin.getWakeOnButton());
+
+            if(wakeOnSkin.getBackground() != null) {
+                backgroundImage.setImage(wakeOnSkin.getBackground());
+            }
 
             homeView.leftPane.getChildren().setAll(wakeOnPane);
 
