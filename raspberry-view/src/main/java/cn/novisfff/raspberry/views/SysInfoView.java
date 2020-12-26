@@ -3,6 +3,7 @@ package cn.novisfff.raspberry.views;
 import cn.novisfff.raspberry.JavafxApplication;
 import cn.novisfff.raspberry.event.StageReadyEvent;
 import cn.novisfff.raspberry.utils.SysInfoUtil;
+import cn.novisfff.raspberry.views.skin.SysInfoSkin;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
 import eu.hansolo.medusa.Section;
@@ -12,6 +13,7 @@ import eu.hansolo.tilesfx.chart.ChartData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
@@ -43,6 +45,8 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
 
     private HomeView homeView;
 
+    private SysInfoSkin sysInfoSkin;
+
     private LinkedList<ChartData> dataList;
 
     @FXML
@@ -59,14 +63,17 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
     Pane memoryPane;
     @FXML
     Pane temperaturePane;
+    @FXML
+    private ImageView backgroundImage;
 
     public Gauge cpu0LoadGauge, cpu1LoadGauge, cpu2LoadGauge, cpu3LoadGauge, memoryGauge, temperatureGauge;
     public Tile cpuLoadTile;
 
 
-    public SysInfoView(ConfigurableApplicationContext applicationContext, HomeView homeView) {
+    public SysInfoView(ConfigurableApplicationContext applicationContext, HomeView homeView, SysInfoSkin sysInfoSkin) {
         this.applicationContext = applicationContext;
         this.homeView = homeView;
+        this.sysInfoSkin = sysInfoSkin;
     }
 
     /**
@@ -77,7 +84,7 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
         Platform.runLater(() -> {
             Pane root;
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(SysInfoView.class.getResource("sysInfo.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(sysInfoSkin.getSysInfoFxml(SysInfoView.class));
                 fxmlLoader.setControllerFactory(applicationContext::getBean);
                 root = fxmlLoader.load();
                 homeView.rightPane1.getChildren().add(root);
@@ -85,115 +92,45 @@ public class SysInfoView implements ApplicationListener<StageReadyEvent>, Update
                 throw new RuntimeException(exception);
             }
 
-            cpu0LoadGauge = buildCpuCoreGauge();
+            cpu0LoadGauge = sysInfoSkin.buildCpuCoreGauge();
             cpu0Pane.getChildren().setAll(cpu0LoadGauge);
 
-            cpu1LoadGauge = buildCpuCoreGauge();
+            cpu1LoadGauge = sysInfoSkin.buildCpuCoreGauge();
             cpu1Pane.getChildren().setAll(cpu1LoadGauge);
 
-            cpu2LoadGauge = buildCpuCoreGauge();
+            cpu2LoadGauge = sysInfoSkin.buildCpuCoreGauge();
             cpu2Pane.getChildren().setAll(cpu2LoadGauge);
 
-            cpu3LoadGauge = buildCpuCoreGauge();
+            cpu3LoadGauge = sysInfoSkin.buildCpuCoreGauge();
             cpu3Pane.getChildren().setAll(cpu3LoadGauge);
 
-            cpuLoadTile = buildCpuLoadTile();
+            dataList = new LinkedList<>();
+            for (int i = 0; i < DATA_LENGTH; i++) {
+                dataList.add(new ChartData("data", 0, Tile.GREEN));
+            }
+            cpuLoadTile = sysInfoSkin.buildCpuLoadTile();
+            cpuLoadTile.setChartData(dataList);
             cpuPane.getChildren().setAll(cpuLoadTile);
 
             int totalMemory = 3700;
             if (applicationContext.getEnvironment().getProperty("os.name").contains("Linux")) {
                 totalMemory = SysInfoUtil.getTotalMemory();
             }
-            memoryGauge = buildMemoryGauge(totalMemory);
+            memoryGauge = sysInfoSkin.buildMemoryGauge(totalMemory);
             memoryPane.getChildren().setAll(memoryGauge);
 
-            temperatureGauge = buildTemperatureGauge();
+            temperatureGauge = sysInfoSkin.buildTemperatureGauge();
             temperaturePane.getChildren().setAll(temperatureGauge);
 
+            if(sysInfoSkin.getBackground() != null) {
+                backgroundImage.setImage(sysInfoSkin.getBackground());
+            }
             homeView.rightPane1.getChildren().setAll(root);
 
             logger.info("加载 SysInfoView");
         });
     }
 
-    /**
-     * 构建绘制CPU单个核心使用率的{@link Gauge}
-     */
-    private Gauge buildCpuCoreGauge() {
-        return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.FLAT)
-                .prefSize(50, 50)
-                .maxValue(100)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
-                .gradientBarEnabled(true)
-                .gradientBarStops(new Stop(0.0, Color.LIME),
-                        new Stop(0.4, Color.YELLOW),
-                        new Stop(0.75, Color.RED))
-                .build();
-    }
-
-    /**
-     * 构建绘制CPU总体使用率的{@link Tile}
-     */
-    private Tile buildCpuLoadTile() {
-        dataList = new LinkedList<>();
-        for (int i = 0; i < DATA_LENGTH; i++) {
-            dataList.add(new ChartData("data", 0, Tile.GREEN));
-        }
-        return TileBuilder.create().skinType(Tile.SkinType.SMOOTH_AREA_CHART)
-                .prefSize(120, 120)
-                .minValue(0)
-                .maxValue(100)
-                .backgroundColor(new Color(0, 0, 0, 0))
-                .valueColor(new Color(0,0,0.05,0.9))
-                .smoothing(true)
-                .chartType(Tile.ChartType.AREA)
-                .chartData(dataList)
-                .tooltipText("")
-                .animated(true)
-                .build();
-    }
-
-    /**
-     * 构建绘制内存使用率的{@link Gauge}
-     */
-    private Gauge buildMemoryGauge(double totalMemory) {
-        return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.DIGITAL)
-                .prefSize(120, 120)
-                .maxValue(totalMemory)
-                .decimals(0)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
-                .majorTickMarkColor(Color.CYAN)
-                .tickLabelColor(new Color(0, 0, 0.05, 0))
-                .barColor(new Color(0.7, 0.7, 0.15, 1))
-                .sectionsVisible(true)
-                .sections(new Section(0, totalMemory * 0.5, Color.LIME),
-                        new Section(totalMemory * 0.5, totalMemory * 0.75, Color.ORANGE),
-                        new Section(totalMemory * 0.75, totalMemory, Color.RED))
-                .build();
-    }
-
-    /**
-     * 构建绘制cpu温度的{@link Gauge}
-     */
-    private Gauge buildTemperatureGauge() {
-        return GaugeBuilder
-                .create()
-                .skinType(Gauge.SkinType.KPI)
-                .prefSize(100, 100)
-                .maxValue(100)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
-                .barColor(Color.LIME)
-                .needleColor(new Color(0, 0.73, 0.72, 1))
-                .thresholdVisible(true)
-                .threshold(70)
-                .thresholdColor(Color.RED)
-                .checkThreshold(true)
-                .build();
-    }
 
     @Override
     public void setCpuLoad(double[] loads) {

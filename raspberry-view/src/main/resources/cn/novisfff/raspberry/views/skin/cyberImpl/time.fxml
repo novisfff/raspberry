@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0"
+            prefWidth="300.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.novisfff.raspberry.views.TimeView">
+    <children>
+        <ImageView fx:id="backgroundImage" fitHeight="120" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+        </ImageView>
+        <Pane fx:id="timePane" prefHeight="120.0" prefWidth="300.0" style="-fx-background-color: transparent;"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+    </children>
+</AnchorPane>

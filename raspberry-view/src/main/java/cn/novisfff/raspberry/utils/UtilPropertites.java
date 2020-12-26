@@ -17,9 +17,9 @@ public class UtilPropertites {
 
     static String broadcast;
 
-    public UtilPropertites(@Value("${networkUtil.ip}")String ip,
-                       @Value("${networkUtil.mac}")String mac,
-                       @Value("${networkUtil.broadcast}")String broadcast) {
+    public UtilPropertites(@Value("${computer.ip}")String ip,
+                       @Value("${computer.mac}")String mac,
+                       @Value("${computer.broadcast}")String broadcast) {
         UtilPropertites.ip = ip;
         UtilPropertites.mac = mac;
         UtilPropertites.broadcast = broadcast;
