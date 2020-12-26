@@ -19,7 +19,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management' /* 依赖管理，用来传递spring的依赖 */
 
     group = 'cn.novisfff'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.1.0-SNAPSHOT'
     sourceCompatibility = '11'
 
     /* java编译的时候缺省状态下会因为中文字符而失败 */
