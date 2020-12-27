@@ -1,0 +1,9 @@
+.root {
+    -fx-font-family: "Source Han Sans CN Bold";
+    -fx-font-size: 16px;
+    -fx-stroke: "#fcc601";
+}
+
+.label {
+    -fx-text-fill: "#fcc601";
+}

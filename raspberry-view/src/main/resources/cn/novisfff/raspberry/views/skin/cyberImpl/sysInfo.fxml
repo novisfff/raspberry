@@ -52,7 +52,7 @@
                 </GridPane>
                 <Label alignment="TOP_LEFT" text="cpu" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
                 </Label>
-                <Label text="mp" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="80.0">
+                <Label text="mb" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="80.0">
                 </Label>
                 <Label alignment="CENTER" layoutX="379.0" layoutY="41.0" prefHeight="20.0" prefWidth="100.0" text="temp"
                        textAlignment="CENTER" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0">

@@ -1,5 +1,7 @@
 package cn.novisfff.raspberry.views.skin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -11,13 +13,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class SkinRegister {
 
+    private final static Logger logger = LoggerFactory.getLogger(SkinRegister.class);
+
+    private static final String DEFAULT_SKIN = "DEFAULT";
+
     private String skinName;
 
     private Skin skin;
 
     public SkinRegister(@Value("${javafx.ui.skin}") String skinName) {
         this.skinName = skinName.toUpperCase();
-        skin = SkinEnum.valueOf(skinName).getSkin();
+        SkinEnum skinEnum = SkinEnum.valueOf(skinName);
+        if (skinEnum == null) {
+            skinEnum = SkinEnum.valueOf(DEFAULT_SKIN);
+        }
+        skin = skinEnum.getSkin();
+        logger.info("加载" + skinEnum.name() + "皮肤");
     }
 
     @Bean

@@ -1,8 +1,8 @@
 # raspberry
 
-[![Springboot](https://img.shields.io/badge/SpringBoot-2.4.1-success)](https://spring.io/projects/spring-boot) ![RaspberryPi](https://img.shields.io/badge/RaspberryPi-4B-important) ![JavaFx](https://img.shields.io/badge/JavaFx-11.0.2-blue)
+[![Springboot](https://img.shields.io/badge/SpringBoot-2.4.1-success)](https://spring.io/projects/spring-boot) ![RaspberryPi](https://img.shields.io/badge/RaspberryPi-4B-important) ![JavaFx](https://img.shields.io/badge/JavaFx-11.0.2-blue) ![Java](https://img.shields.io/badge/OpenJdk-11-red)
 
-[![Build Status](https://travis-ci.com/novisfff/raspberry.svg?branch=master)](https://travis-ci.com/novisfff/raspberry) [![DeepSource](https://deepsource.io/gh/novisfff/raspberry.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/novisfff/raspberry/?ref=repository-badge)
+[![Build Status](https://travis-ci.com/novisfff/raspberry.svg?branch=dev)](https://travis-ci.com/novisfff/raspberry) [![DeepSource](https://deepsource.io/gh/novisfff/raspberry.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/novisfff/raspberry/?ref=repository-badge)
 
 > 目前处于开发阶段
 

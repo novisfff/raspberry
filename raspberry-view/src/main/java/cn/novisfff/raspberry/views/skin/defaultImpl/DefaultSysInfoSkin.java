@@ -1,4 +1,4 @@
-package cn.novisfff.raspberry.views.skin.cyberImpl;
+package cn.novisfff.raspberry.views.skin.defaultImpl;
 
 import cn.novisfff.raspberry.views.skin.SysInfoSkin;
 import eu.hansolo.medusa.Gauge;
@@ -17,28 +17,28 @@ import java.net.URL;
  * @date ：Created in 2020/12/26
  */
 
-public class CyberSysInfoSkin implements SysInfoSkin {
+public class DefaultSysInfoSkin implements SysInfoSkin {
 
-    private static CyberSysInfoSkin instance;
+    private static DefaultSysInfoSkin instance;
 
-    private CyberSysInfoSkin() {
+    private DefaultSysInfoSkin() {
     }
 
-    public static synchronized CyberSysInfoSkin getInstance() {
+    public static synchronized DefaultSysInfoSkin getInstance() {
         if(instance == null) {
-            instance = new CyberSysInfoSkin();
+            instance = new DefaultSysInfoSkin();
         }
         return instance;
     }
 
     @Override
     public URL getSysInfoFxml(Class<?> source) {
-        return CyberSysInfoSkin.class.getResource("sysInfo.fxml");
+        return DefaultSysInfoSkin.class.getResource("sysInfo.fxml");
     }
 
     @Override
     public Image getBackground() {
-        return new Image("pic/cyberRight.png");
+        return new Image("pic/defaultRight.png");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CyberSysInfoSkin implements SysInfoSkin {
                 .skinType(Gauge.SkinType.FLAT)
                 .prefSize(50, 50)
                 .maxValue(100)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
+                .valueColor(Color.WHITE)
                 .gradientBarEnabled(true)
                 .gradientBarStops(new Stop(0.0, Color.LIME),
                         new Stop(0.4, Color.YELLOW),
@@ -63,7 +63,7 @@ public class CyberSysInfoSkin implements SysInfoSkin {
                 .minValue(0)
                 .maxValue(100)
                 .backgroundColor(new Color(0, 0, 0, 0))
-                .valueColor(new Color(0, 0, 0.05, 0.9))
+                .valueColor(Color.WHITE)
                 .smoothing(true)
                 .chartType(Tile.ChartType.AREA)
                 .tooltipText("")
@@ -79,7 +79,7 @@ public class CyberSysInfoSkin implements SysInfoSkin {
                 .prefSize(120, 120)
                 .maxValue(total)
                 .decimals(0)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
+                .valueColor(Color.WHITE)
                 .majorTickMarkColor(Color.CYAN)
                 .tickLabelColor(new Color(0, 0, 0.05, 0))
                 .barColor(new Color(0.7, 0.7, 0.15, 1))
@@ -97,7 +97,7 @@ public class CyberSysInfoSkin implements SysInfoSkin {
                 .skinType(Gauge.SkinType.KPI)
                 .prefSize(100, 100)
                 .maxValue(100)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
+                .valueColor(Color.WHITE)
                 .barColor(Color.LIME)
                 .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)

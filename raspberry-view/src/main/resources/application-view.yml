@@ -2,7 +2,7 @@
 # javafx 配置
 javafx:
   ui:
-    skin: CYBER
+    skin: DEFAULT
     title: spring
     width: 800
     height: 480

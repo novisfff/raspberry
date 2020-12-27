@@ -1,4 +1,4 @@
-package cn.novisfff.raspberry.views.skin.cyberImpl;
+package cn.novisfff.raspberry.views.skin.defaultImpl;
 
 import cn.novisfff.raspberry.views.skin.WakeOnSkin;
 import javafx.scene.image.Image;
@@ -10,28 +10,28 @@ import java.net.URL;
  * @date ：Created in 2020/12/26
  */
 
-public class CyberWakeOnSkin implements WakeOnSkin {
+public class DefaultWakeOnSkin implements WakeOnSkin {
 
-    private static CyberWakeOnSkin instance;
+    private static DefaultWakeOnSkin instance;
 
-    private CyberWakeOnSkin() {
+    private DefaultWakeOnSkin() {
     }
 
-    public static synchronized CyberWakeOnSkin getInstance() {
+    public static synchronized DefaultWakeOnSkin getInstance() {
         if(instance == null) {
-            instance = new CyberWakeOnSkin();
+            instance = new DefaultWakeOnSkin();
         }
         return instance;
     }
 
     @Override
     public URL getWakeOnFxml(Class<?> source) {
-        return CyberWakeOnSkin.class.getResource("wakeon.fxml");
+        return DefaultWakeOnSkin.class.getResource("wakeon.fxml");
     }
 
     @Override
     public Image getBackground() {
-        return new Image("pic/cyberLeft.png");
+        return new Image("pic/defaultLeft.png");
     }
 
     @Override
