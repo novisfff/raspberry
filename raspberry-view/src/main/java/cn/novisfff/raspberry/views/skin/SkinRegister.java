@@ -21,7 +21,7 @@ public class SkinRegister {
 
     private Skin skin;
 
-    public SkinRegister(@Value("${javafx.ui.skin}") String skinName) {
+    public SkinRegister(@Value("${javafx.ui.skin:DEFAULT}") String skinName) {
         this.skinName = skinName.toUpperCase();
         initSkin();
     }
@@ -35,7 +35,7 @@ public class SkinRegister {
             skinEnum = SkinEnum.valueOf(skinName);
         } catch (Exception e) {
             skinEnum = SkinEnum.valueOf(DEFAULT_SKIN);
-            logger.warn("未找到指定皮肤或未指定皮肤，加载默认皮肤");
+            logger.warn("未找到指定皮肤，加载默认皮肤");
         }
 
         skin = skinEnum.getSkin();
