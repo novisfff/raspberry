@@ -21,12 +21,23 @@ public class SkinRegister {
 
     private Skin skin;
 
-    public SkinRegister(@Value("${javafx.ui.skin}") String skinName) {
+    public SkinRegister(@Value("${javafx.ui.skin:DEFAULT}") String skinName) {
         this.skinName = skinName.toUpperCase();
-        SkinEnum skinEnum = SkinEnum.valueOf(skinName);
-        if (skinEnum == null) {
+        initSkin();
+    }
+
+    /**
+     * 初始化皮肤
+     */
+    private void initSkin() {
+        SkinEnum skinEnum;
+        try {
+            skinEnum = SkinEnum.valueOf(skinName);
+        } catch (Exception e) {
             skinEnum = SkinEnum.valueOf(DEFAULT_SKIN);
+            logger.warn("未找到指定皮肤，加载默认皮肤");
         }
+
         skin = skinEnum.getSkin();
         logger.info("加载" + skinEnum.name() + "皮肤");
     }
