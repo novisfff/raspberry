@@ -26,7 +26,7 @@
                 <Font name="Source Han Sans CN Bold Bold" size="18.0" />
             </font>
         </Label>
-        <Pane layoutX="37.0" layoutY="90.0" prefHeight="24.0" prefWidth="50.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #666666;">
+        <Pane layoutX="37.0" layoutY="90.0" prefHeight="24.0" prefWidth="50.0" style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #888888; -fx-border-width: 1; -fx-border-color: #fcc601;">
             <children>
                 <Circle fx:id="airDot" fill="#eec82e" layoutX="14.0" layoutY="12.0" radius="6.0" stroke="#ffffff00" strokeMiterLimit="12.0" strokeType="INSIDE" />
                 <Label fx:id="airLable" layoutX="26.0" layoutY="1.0" style="-fx-background-radius: 12; -fx-border-radius: 12;" text="良" textFill="#f2c72e">
