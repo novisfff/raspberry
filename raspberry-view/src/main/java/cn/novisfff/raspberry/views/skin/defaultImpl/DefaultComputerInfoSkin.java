@@ -1,4 +1,4 @@
-package cn.novisfff.raspberry.views.skin.cyberImpl;
+package cn.novisfff.raspberry.views.skin.defaultImpl;
 
 import cn.novisfff.raspberry.views.skin.ComputerInfoSkin;
 import eu.hansolo.medusa.Gauge;
@@ -16,28 +16,28 @@ import java.net.URL;
  * @date ：Created in 2020/12/26
  */
 
-public class CyberComputerInfoSkin implements ComputerInfoSkin {
+public class DefaultComputerInfoSkin implements ComputerInfoSkin {
 
-    private static CyberComputerInfoSkin instance;
+    private static DefaultComputerInfoSkin instance;
 
-    private CyberComputerInfoSkin() {
+    private DefaultComputerInfoSkin() {
     }
 
     public static synchronized ComputerInfoSkin getInstance() {
         if(instance == null) {
-            instance = new CyberComputerInfoSkin();
+            instance = new DefaultComputerInfoSkin();
         }
         return instance;
     }
 
     @Override
     public URL getComputerInfoFxml(Class<?> source) {
-        return CyberComputerInfoSkin.class.getResource("computerInfo.fxml");
+        return DefaultComputerInfoSkin.class.getResource("computerInfo.fxml");
     }
 
     @Override
     public Image getBackground() {
-        return new Image("pic/cyberLeft.png");
+        return new Image("pic/defaultLeft.png");
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CyberComputerInfoSkin implements ComputerInfoSkin {
                 .minValue(0)
                 .maxValue(100)
                 .backgroundColor(new Color(0, 0, 0, 0))
-                .valueColor(new Color(0,0,0.05,0.9))
+                .valueColor(Color.WHITE)
                 .smoothing(true)
                 .chartType(Tile.ChartType.AREA)
                 .tooltipText("")
@@ -62,7 +62,7 @@ public class CyberComputerInfoSkin implements ComputerInfoSkin {
                 .skinType(Gauge.SkinType.KPI)
                 .prefSize(150, 150)
                 .maxValue(100)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
+                .valueColor(Color.WHITE)
                 .barColor(Color.LIME)
                 .needleColor(new Color(0, 0.73, 0.72, 1))
                 .thresholdVisible(true)
@@ -84,7 +84,7 @@ public class CyberComputerInfoSkin implements ComputerInfoSkin {
                 .barBackgroundColor(Color.WHITE)
                 .barBorderColor(Color.WHITE)
                 .tickLabelColor(Color.WHITE)
-                .valueColor(new Color(0, 0, 0.05, 0.9))
+                .valueColor(Color.WHITE)
                 .barColor(new Color(0.1, 0.7, 1, 1))
                 .sectionsVisible(true)
                 .sections(new Section(0, total * 0.5, new Color(0.1, 1, 0.1, 0.3)),

@@ -11,13 +11,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class SkinRegister {
 
+    private static final String DEFAULT_SKIN = "DEFAULT";
+
     private String skinName;
 
     private Skin skin;
 
     public SkinRegister(@Value("${javafx.ui.skin}") String skinName) {
         this.skinName = skinName.toUpperCase();
-        skin = SkinEnum.valueOf(skinName).getSkin();
+        SkinEnum skinEnum = SkinEnum.valueOf(skinName);
+        if (skinEnum == null) {
+            skinEnum = SkinEnum.valueOf(DEFAULT_SKIN);
+        }
+        skin = skinEnum.getSkin();
     }
 
     @Bean

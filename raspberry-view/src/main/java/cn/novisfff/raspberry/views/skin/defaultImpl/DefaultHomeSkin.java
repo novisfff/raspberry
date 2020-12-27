@@ -1,4 +1,4 @@
-package cn.novisfff.raspberry.views.skin.cyberImpl;
+package cn.novisfff.raspberry.views.skin.defaultImpl;
 
 import cn.novisfff.raspberry.views.skin.HomeSkin;
 import javafx.scene.image.Image;
@@ -11,16 +11,16 @@ import java.util.List;
  * @date ：Created in 2020/12/26
  */
 
-public class CyberHomeSkin implements HomeSkin {
+public class DefaultHomeSkin implements HomeSkin {
 
-    private static CyberHomeSkin instance;
+    private static DefaultHomeSkin instance;
 
-    private CyberHomeSkin() {
+    private DefaultHomeSkin() {
     }
 
-    public static synchronized CyberHomeSkin getInstance() {
+    public static synchronized DefaultHomeSkin getInstance() {
         if(instance == null) {
-            instance = new CyberHomeSkin();
+            instance = new DefaultHomeSkin();
         }
         return instance;
     }
@@ -28,25 +28,24 @@ public class CyberHomeSkin implements HomeSkin {
     @Override
     public List<String> getStylesheetsUrl(Class<?> source) {
         ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add(CyberHomeSkin.class.getResource("style.css").toExternalForm());
+        stringArrayList.add(DefaultHomeSkin.class.getResource("style.css").toExternalForm());
         return stringArrayList;
     }
 
     @Override
     public List<String> getFontsUrl(Class<?> source) {
         ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add(CyberHomeSkin.class.getResource("cyber.ttf").toExternalForm());
         stringArrayList.add(source.getResource("SourceHanSansCNBold.otf").toExternalForm());
         return stringArrayList;
     }
 
     @Override
     public URL getHomeFxml(Class<?> source) {
-        return CyberHomeSkin.class.getResource("home.fxml");
+        return DefaultHomeSkin.class.getResource("home.fxml");
     }
 
     @Override
     public Image getBackground() {
-        return new Image("/pic/cyberBackground.png");
+        return new Image("/pic/defaultBackground.png");
     }
 }

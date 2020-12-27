@@ -50,11 +50,11 @@
                         </Pane>
                     </children>
                 </GridPane>
-                <Label alignment="TOP_LEFT" text="cpu" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
+                <Label text="CPU" alignment="TOP_LEFT" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
                 </Label>
-                <Label text="mb" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="80.0">
+                <Label text="MB" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="80.0">
                 </Label>
-                <Label alignment="CENTER" layoutX="379.0" layoutY="41.0" prefHeight="20.0" prefWidth="100.0" text="temp"
+                <Label text="Temp" alignment="CENTER" layoutX="379.0" layoutY="41.0" prefHeight="20.0" prefWidth="100.0"
                        textAlignment="CENTER" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0">
                 </Label>
                 <Pane fx:id="cpuPane" layoutX="5.0" prefHeight="120.0" prefWidth="120.0">
@@ -66,7 +66,7 @@
                       AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="5.0"/>
                 <Pane fx:id="temperaturePane" layoutX="346.0" layoutY="-70.0" prefHeight="100.0" prefWidth="100.0"
                       AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="30.0"/>
-                <Label layoutX="380.0" layoutY="17.0" text="memory" AnchorPane.leftAnchor="275.0"
+                <Label text="Memory" layoutX="380.0" layoutY="17.0" AnchorPane.leftAnchor="275.0"
                        AnchorPane.topAnchor="30.0">
                 </Label>
             </children>
